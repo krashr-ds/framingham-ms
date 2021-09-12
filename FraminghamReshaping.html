@@ -13974,7 +13974,7 @@ a.anchor-link {
 <h2 id="Framingham-Reshaping">Framingham Reshaping<a class="anchor-link" href="#Framingham-Reshaping">&#182;</a></h2><p>Turning the longitudinal Framingham data into a format suitable for multistate modeling.</p>
 <p>We will focus on creating a data set suitable for four states: No disease, Hypertension, Cardiovascular disease (any), and Death (absorbing).</p>
 <p>Some people will begin in State 2 due to PREVHYP.</p>
-<p>Retained covariates will include: Age, Sex, BMI, Diabetes (y/n), and Smoker (y/n)</p>
+<p>Retained covariates will include: Age, Sex, Diabetes (y/n), and Smoker (y/n)</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14445,7 +14445,7 @@ memory usage: 3.4+ MB
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">at_risk</span> <span class="o">=</span> <span class="n">framingham</span><span class="p">[(</span><span class="n">framingham</span><span class="p">[</span><span class="s2">&quot;PREVAP&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">framingham</span><span class="p">[</span><span class="s2">&quot;PREVCHD&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">framingham</span><span class="p">[</span><span class="s2">&quot;PREVMI&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">framingham</span><span class="p">[</span><span class="s2">&quot;PREVSTRK&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)]</span> 
-<span class="n">at_risk</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">,</span> <span class="s2">&quot;TIME&quot;</span><span class="p">,</span> <span class="s2">&quot;PERIOD&quot;</span><span class="p">,</span> <span class="s2">&quot;TIMECVD&quot;</span><span class="p">,</span> <span class="s2">&quot;TIMEDTH&quot;</span><span class="p">,</span> <span class="s2">&quot;TIMEHYP&quot;</span><span class="p">,</span> <span class="s2">&quot;PREVHYP&quot;</span><span class="p">,</span> <span class="s2">&quot;AGE&quot;</span><span class="p">,</span> <span class="s2">&quot;SEX&quot;</span><span class="p">,</span> <span class="s2">&quot;BMI&quot;</span><span class="p">,</span> <span class="s2">&quot;CURSMOKE&quot;</span><span class="p">,</span> <span class="s2">&quot;DIABETES&quot;</span><span class="p">]]</span>
+<span class="n">at_risk</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">,</span> <span class="s2">&quot;TIME&quot;</span><span class="p">,</span> <span class="s2">&quot;PERIOD&quot;</span><span class="p">,</span> <span class="s2">&quot;CVD&quot;</span><span class="p">,</span> <span class="s2">&quot;TIMECVD&quot;</span><span class="p">,</span> <span class="s2">&quot;DEATH&quot;</span><span class="p">,</span> <span class="s2">&quot;TIMEDTH&quot;</span><span class="p">,</span> <span class="s2">&quot;HYPERTEN&quot;</span><span class="p">,</span> <span class="s2">&quot;TIMEHYP&quot;</span><span class="p">,</span> <span class="s2">&quot;PREVHYP&quot;</span><span class="p">,</span> <span class="s2">&quot;AGE&quot;</span><span class="p">,</span> <span class="s2">&quot;SEX&quot;</span><span class="p">,</span> <span class="s2">&quot;CURSMOKE&quot;</span><span class="p">,</span> <span class="s2">&quot;DIABETES&quot;</span><span class="p">]]</span>
 <span class="n">at_risk</span>
 </pre></div>
 
@@ -14488,13 +14488,15 @@ memory usage: 3.4+ MB
       <th>RANDID</th>
       <th>TIME</th>
       <th>PERIOD</th>
+      <th>CVD</th>
       <th>TIMECVD</th>
+      <th>DEATH</th>
       <th>TIMEDTH</th>
+      <th>HYPERTEN</th>
       <th>TIMEHYP</th>
       <th>PREVHYP</th>
       <th>AGE</th>
       <th>SEX</th>
-      <th>BMI</th>
       <th>CURSMOKE</th>
       <th>DIABETES</th>
     </tr>
@@ -14505,13 +14507,15 @@ memory usage: 3.4+ MB
       <td>2448</td>
       <td>0</td>
       <td>1</td>
+      <td>1</td>
       <td>6438</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>39</td>
       <td>1</td>
-      <td>26.97</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -14520,13 +14524,15 @@ memory usage: 3.4+ MB
       <td>2448</td>
       <td>4628</td>
       <td>3</td>
+      <td>1</td>
       <td>6438</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>52</td>
       <td>1</td>
-      <td>.</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -14535,13 +14541,15 @@ memory usage: 3.4+ MB
       <td>6238</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>46</td>
       <td>2</td>
-      <td>28.73</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -14550,13 +14558,15 @@ memory usage: 3.4+ MB
       <td>6238</td>
       <td>2156</td>
       <td>2</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>52</td>
       <td>2</td>
-      <td>29.43</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -14565,18 +14575,22 @@ memory usage: 3.4+ MB
       <td>6238</td>
       <td>4344</td>
       <td>3</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>58</td>
       <td>2</td>
-      <td>28.5</td>
       <td>0</td>
       <td>0</td>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -14595,13 +14609,15 @@ memory usage: 3.4+ MB
       <td>9998212</td>
       <td>2333</td>
       <td>2</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>46</td>
       <td>1</td>
-      <td>19.17</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -14610,13 +14626,15 @@ memory usage: 3.4+ MB
       <td>9998212</td>
       <td>4538</td>
       <td>3</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>52</td>
       <td>1</td>
-      <td>25.74</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -14625,13 +14643,15 @@ memory usage: 3.4+ MB
       <td>9999312</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>4201</td>
       <td>0</td>
       <td>39</td>
       <td>2</td>
-      <td>20.91</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -14640,13 +14660,15 @@ memory usage: 3.4+ MB
       <td>9999312</td>
       <td>2390</td>
       <td>2</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>4201</td>
       <td>0</td>
       <td>46</td>
       <td>2</td>
-      <td>26.39</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -14655,19 +14677,21 @@ memory usage: 3.4+ MB
       <td>9999312</td>
       <td>4201</td>
       <td>3</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>4201</td>
       <td>1</td>
       <td>50</td>
       <td>2</td>
-      <td>24.19</td>
       <td>1</td>
       <td>0</td>
     </tr>
   </tbody>
 </table>
-<p>10668 rows × 12 columns</p>
+<p>10668 rows × 14 columns</p>
 </div>
 </div>
 
@@ -14681,9 +14705,11 @@ memory usage: 3.4+ MB
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="Discover-Ns">Discover Ns<a class="anchor-link" href="#Discover-Ns">&#182;</a></h2><p>The last day of the Framingham study was day # 8,766.</p>
-<p>Patients who reached day 8,766 <strong>without</strong> getting Hypertension would have TIMEHYP set to this number - meaning they could have gotten Hypertension after this day, but nobody would know about it.</p>
-<p>In other words, if TIME in days is set to 8,766 for a category, it indicates the patient reached the end of the study period (or was censored) without that disease and/or without dying.</p>
-<p>So we want to figure out how many unique individuals in the study <strong>did</strong> get diagnosed with Hypertension (State 2), get diagnosed with CVD (State 3), or Died before day 8,766 (State 4).</p>
+<p>Patients who reached day 8,766 <strong>without</strong> getting CVD would have TIMECVD set to this number - meaning they could have gotten CVD after this day, but nobody would know about it.</p>
+<p>Another possibility is that they were censored because they dropped out of the study before day 8,766.  In this case, DEATH would be 0, and TIMEDTH would be set to the drop-out date.</p>
+<p>Being in an unknown state, or censored, is something we want to account for.</p>
+<p>In other words, if TIME in days is set to 8,766 for a DISEASE CATEGORY (eg. TIMEDTH, TIMECVD), it indicates the patient reached the end of the study period (or was censored) without that disease and/or without dying OR, if the indicator flag for that disease state (HYPERTEN, CVD, DEATH) is set to 0, the value in the TIMEDTH variable is the censorship day.</p>
+<p>So we want to figure out how many unique individuals in the study <strong>did</strong> get diagnosed with HYPERTENSION (State 2), get diagnosed with CVD (State 3), or Died (State 4) and how many were censored.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14695,9 +14721,13 @@ memory usage: 3.4+ MB
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">last_day_of_study</span> <span class="o">=</span> <span class="mi">8766</span>
 
 <span class="n">ind_ids</span> <span class="o">=</span> <span class="n">at_risk</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">])[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-<span class="n">died_ids</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIME&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEDTH&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">last_day_of_study</span><span class="p">)][</span><span class="s2">&quot;RANDID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
-<span class="n">cvd_ids</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIME&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMECVD&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">last_day_of_study</span><span class="p">)][</span><span class="s2">&quot;RANDID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
-<span class="n">htn_ids</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[((</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIME&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEHYP&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">last_day_of_study</span><span class="p">))</span> <span class="o">|</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;PREVHYP&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)][</span><span class="s2">&quot;RANDID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="n">died_ids</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;DEATH&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEDTH&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">last_day_of_study</span><span class="p">)][</span><span class="s2">&quot;RANDID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="n">cvd_ids</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;CVD&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMECVD&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">last_day_of_study</span><span class="p">)][</span><span class="s2">&quot;RANDID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="n">htn_ids</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[((</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;HYPERTEN&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEHYP&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEHYP&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">last_day_of_study</span><span class="p">))</span> <span class="o">|</span> 
+                  <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;PREVHYP&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)][</span><span class="s2">&quot;RANDID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+
+<span class="n">censored_ids</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[((</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEDTH&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;DEATH&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> 
+                        <span class="p">((</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;CVD&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;HYPERTEN&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)))][</span><span class="s2">&quot;RANDID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
 </pre></div>
 
      </div>
@@ -14751,7 +14781,8 @@ memory usage: 3.4+ MB
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>3,161 of them (75%) either started the study with Hypertension, or became Hypertensive after TIME 0 (entered State 2)</p>
+<p>3,065 of them (73%) either started the study with Hypertension, or became Hypertensive after TIME 0 (entered State 2).</p>
+<p>This is a lot of people by today's standards, but in the 1950s and 60s when this data were collected, many people had untreated hypertension and physicians generally considered it part of the process of aging and didn't treat it.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14783,17 +14814,17 @@ memory usage: 3.4+ MB
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
 <pre>7          10552
-10         11252
+9          11252
 12         11263
-18         12806
-20         14367
+15         12629
+17         12806
           ...   
-11614    9990894
-11617    9993179
-11620    9995546
+11613    9990894
+11616    9993179
+11619    9995546
 11621    9998212
-11625    9999312
-Name: RANDID, Length: 3161, dtype: int64</pre>
+11624    9999312
+Name: RANDID, Length: 3065, dtype: int64</pre>
 </div>
 
 </div>
@@ -14805,7 +14836,7 @@ Name: RANDID, Length: 3161, dtype: int64</pre>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>1,315 of them (31%) got Cardiovascular disease after TIME 0 (entered State 3)</p>
+<p>996 of them (24%) got Cardiovascular disease after TIME 0 (entered State 3)</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14836,18 +14867,18 @@ Name: RANDID, Length: 3161, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>1           2448
-8          10552
-13         11263
-33         23727
-36         24721
+<pre>0           2448
+7          10552
+12         11263
+55         43770
+64         54224
           ...   
-11605    9982118
-11611    9989287
-11614    9990894
-11617    9993179
-11620    9995546
-Name: RANDID, Length: 1315, dtype: int64</pre>
+11590    9967157
+11595    9969773
+11604    9982118
+11608    9984683
+11619    9995546
+Name: RANDID, Length: 996, dtype: int64</pre>
 </div>
 
 </div>
@@ -14859,7 +14890,7 @@ Name: RANDID, Length: 1315, dtype: int64</pre>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>And 992 of them (24%) died after TIME 0 but before the last day of the study (entered State 4)</p>
+<p>And 1,388 of them (33%) died after TIME 0 but before the last day of the study (entered State 4)</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14890,18 +14921,18 @@ Name: RANDID, Length: 1315, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>8          10552
-33         23727
-36         24721
-56         43770
-73         66472
+<pre>7          10552
+32         23727
+35         24721
+38         30928
+42         33555
           ...   
-11599    9973350
-11605    9982118
-11611    9989287
-11614    9990894
-11617    9993179
-Name: RANDID, Length: 992, dtype: int64</pre>
+11607    9983319
+11608    9984683
+11610    9989287
+11613    9990894
+11616    9993179
+Name: RANDID, Length: 1388, dtype: int64</pre>
 </div>
 
 </div>
@@ -14913,16 +14944,72 @@ Name: RANDID, Length: 992, dtype: int64</pre>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Now that we know how many people reached each state, we need to figure out what state they started in.</p>
-<p>Some people started in State 1 - No Disease, while others started in State 2 - Hypertension.</p>
-<p>Some even had recorded data at TIME 0 and then no recorded data until period 3 (TIME 45xxish).</p>
-<p>Transition times from one state to another are in the TIMEHYP, TIMECVD and TIMEDTH columns, NOT in the TIME column.  The TIME column just records VISIT times for longitudinal study participants, so we only care about the TIME column for State 1 and maybe State 2 (for people with PREVHYP == 1 <strong>at</strong> their initial time).</p>
+<p>2,507 individuals (59%) reached the end of the study alive, in an unknown state.</p>
+<p>We will consider them censored.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">censored_ids</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>0           2448
+2           6238
+5           9428
+9          11252
+15         12629
+          ...   
+11582    9960803
+11584    9961615
+11601    9978986
+11621    9998212
+11624    9999312
+Name: RANDID, Length: 2507, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Now that we know how many individuals reached each state, we need to figure out what state they started in.</p>
+<p>Some people started in State 1 - No Disease, while others started in State 2 - Hypertension.</p>
+<p>Some had recorded data at TIME 0 and then no further recorded data, or no recorded data until period 3 (TIME 45xxish).</p>
+<p>Even when Framingham participants had no further TIME/examination data, the exact DAY of future diagnoses were filled in by researchers.  So a person could have a single row, at TIME 0, and that row could have the day they got Hypertension (after TIME 0) and the day they Died (after TIME 0), for example.</p>
+<p>Relatedly, transition times from one state to another are in the TIMEHYP, TIMECVD and TIMEDTH columns, NOT in the TIME column.  The TIME column just records examination times for longitudinal study participants, so we don't care about the TIME column, we just want to make sure we have the latest information for covariates such as smoking and diabetes status.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">start_times</span> <span class="o">=</span> <span class="n">at_risk</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">)</span>
@@ -14942,7 +15029,7 @@ Name: RANDID, Length: 992, dtype: int64</pre>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
 
 
 
@@ -14968,13 +15055,15 @@ Name: RANDID, Length: 992, dtype: int64</pre>
       <th>RANDID</th>
       <th>TIME</th>
       <th>PERIOD</th>
+      <th>CVD</th>
       <th>TIMECVD</th>
+      <th>DEATH</th>
       <th>TIMEDTH</th>
+      <th>HYPERTEN</th>
       <th>TIMEHYP</th>
       <th>PREVHYP</th>
       <th>AGE</th>
       <th>SEX</th>
-      <th>BMI</th>
       <th>CURSMOKE</th>
       <th>DIABETES</th>
     </tr>
@@ -14985,13 +15074,15 @@ Name: RANDID, Length: 992, dtype: int64</pre>
       <td>2448</td>
       <td>0</td>
       <td>1</td>
+      <td>1</td>
       <td>6438</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>39</td>
       <td>1</td>
-      <td>26.97</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -15000,13 +15091,15 @@ Name: RANDID, Length: 992, dtype: int64</pre>
       <td>6238</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>46</td>
       <td>2</td>
-      <td>28.73</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -15015,13 +15108,15 @@ Name: RANDID, Length: 992, dtype: int64</pre>
       <td>9428</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>48</td>
       <td>1</td>
-      <td>25.34</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -15030,13 +15125,15 @@ Name: RANDID, Length: 992, dtype: int64</pre>
       <td>10552</td>
       <td>0</td>
       <td>1</td>
+      <td>1</td>
       <td>2089</td>
+      <td>1</td>
       <td>2956</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>61</td>
       <td>2</td>
-      <td>28.58</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -15045,18 +15142,22 @@ Name: RANDID, Length: 992, dtype: int64</pre>
       <td>11252</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>4285</td>
       <td>0</td>
       <td>46</td>
       <td>2</td>
-      <td>23.1</td>
       <td>1</td>
       <td>0</td>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -15075,13 +15176,15 @@ Name: RANDID, Length: 992, dtype: int64</pre>
       <td>9990894</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>6433</td>
+      <td>1</td>
       <td>6433</td>
+      <td>1</td>
       <td>2219</td>
       <td>0</td>
       <td>48</td>
       <td>2</td>
-      <td>22</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -15090,13 +15193,15 @@ Name: RANDID, Length: 992, dtype: int64</pre>
       <td>9993179</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>6729</td>
+      <td>1</td>
       <td>6729</td>
+      <td>1</td>
       <td>4396</td>
       <td>0</td>
       <td>44</td>
       <td>2</td>
-      <td>19.16</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -15105,13 +15210,15 @@ Name: RANDID, Length: 992, dtype: int64</pre>
       <td>9995546</td>
       <td>0</td>
       <td>1</td>
+      <td>1</td>
       <td>5209</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>735</td>
       <td>0</td>
       <td>52</td>
       <td>2</td>
-      <td>21.47</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -15120,13 +15227,15 @@ Name: RANDID, Length: 992, dtype: int64</pre>
       <td>9998212</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>40</td>
       <td>1</td>
-      <td>25.6</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -15135,19 +15244,21 @@ Name: RANDID, Length: 992, dtype: int64</pre>
       <td>9999312</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>4201</td>
       <td>0</td>
       <td>39</td>
       <td>2</td>
-      <td>20.91</td>
       <td>1</td>
       <td>0</td>
     </tr>
   </tbody>
 </table>
-<p>4215 rows × 12 columns</p>
+<p>4215 rows × 14 columns</p>
 </div>
 </div>
 
@@ -15166,54 +15277,10 @@ Name: RANDID, Length: 992, dtype: int64</pre>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start_times</span><span class="p">[</span><span class="s2">&quot;TIME&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>0    4215
-Name: TIME, dtype: int64</pre>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>2,917 of them (69%) were healthy, and 1,298 (31%) already had Hypertension.</p>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start_times</span><span class="p">[</span><span class="s2">&quot;PREVHYP&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start_times</span><span class="p">[</span><span class="s2">&quot;TIME&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 
      </div>
@@ -15235,6 +15302,50 @@ Name: TIME, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>0    4215
+Name: TIME, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>2,917 of them (69%) were healthy, and 1,298 (31%) already knew they had Hypertension.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start_times</span><span class="p">[</span><span class="s2">&quot;PREVHYP&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
 <pre>0    2917
 1    1298
 Name: PREVHYP, dtype: int64</pre>
@@ -15249,7 +15360,7 @@ Name: PREVHYP, dtype: int64</pre>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms1</span> <span class="o">=</span> <span class="n">at_risk</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -15272,7 +15383,7 @@ Name: PREVHYP, dtype: int64</pre>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[15]:</div>
 
 
 
@@ -15299,13 +15410,15 @@ Name: PREVHYP, dtype: int64</pre>
       <th>RANDID</th>
       <th>TIME</th>
       <th>PERIOD</th>
+      <th>CVD</th>
       <th>TIMECVD</th>
+      <th>DEATH</th>
       <th>TIMEDTH</th>
+      <th>HYPERTEN</th>
       <th>TIMEHYP</th>
       <th>PREVHYP</th>
       <th>AGE</th>
       <th>SEX</th>
-      <th>BMI</th>
       <th>CURSMOKE</th>
       <th>DIABETES</th>
       <th>STATE</th>
@@ -15319,13 +15432,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>2448</td>
       <td>0</td>
       <td>1</td>
+      <td>1</td>
       <td>6438</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>39</td>
       <td>1</td>
-      <td>26.97</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -15337,13 +15452,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>6238</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>46</td>
       <td>2</td>
-      <td>28.73</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -15355,13 +15472,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>9428</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>48</td>
       <td>1</td>
-      <td>25.34</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
@@ -15373,13 +15492,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>10552</td>
       <td>0</td>
       <td>1</td>
+      <td>1</td>
       <td>2089</td>
+      <td>1</td>
       <td>2956</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>61</td>
       <td>2</td>
-      <td>28.58</td>
       <td>1</td>
       <td>0</td>
       <td>2</td>
@@ -15391,13 +15512,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>11252</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>4285</td>
       <td>0</td>
       <td>46</td>
       <td>2</td>
-      <td>23.1</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
@@ -15420,6 +15543,8 @@ Name: PREVHYP, dtype: int64</pre>
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
       <th>4210</th>
@@ -15427,13 +15552,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>9990894</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>6433</td>
+      <td>1</td>
       <td>6433</td>
+      <td>1</td>
       <td>2219</td>
       <td>0</td>
       <td>48</td>
       <td>2</td>
-      <td>22</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
@@ -15445,13 +15572,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>9993179</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>6729</td>
+      <td>1</td>
       <td>6729</td>
+      <td>1</td>
       <td>4396</td>
       <td>0</td>
       <td>44</td>
       <td>2</td>
-      <td>19.16</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
@@ -15463,13 +15592,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>9995546</td>
       <td>0</td>
       <td>1</td>
+      <td>1</td>
       <td>5209</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>735</td>
       <td>0</td>
       <td>52</td>
       <td>2</td>
-      <td>21.47</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -15481,13 +15612,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>9998212</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>40</td>
       <td>1</td>
-      <td>25.6</td>
       <td>0</td>
       <td>0</td>
       <td>2</td>
@@ -15499,13 +15632,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>9999312</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>4201</td>
       <td>0</td>
       <td>39</td>
       <td>2</td>
-      <td>20.91</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
@@ -15513,7 +15648,7 @@ Name: PREVHYP, dtype: int64</pre>
     </tr>
   </tbody>
 </table>
-<p>4215 rows × 15 columns</p>
+<p>4215 rows × 17 columns</p>
 </div>
 </div>
 
@@ -15534,6 +15669,9 @@ Name: PREVHYP, dtype: int64</pre>
 <p>Or, potentially, all THREE things might occur on the same day.</p>
 <p>We have to resolve these conflicts, or the model won't run.</p>
 <p>So, wherever a person is recorded as transitioning from State 1 to State 2 &amp; 3 or 3 &amp; 4, or 2, 3 &amp; 4 on the same day, for example, this must be replaced by a transition ONLY to state 4.</p>
+<h2 id="Also:">Also:<a class="anchor-link" href="#Also:">&#182;</a></h2><p>Some people will have covariate updates after TIME 0, and before DEATH and others won't.</p>
+<p>We want the latest covariates for those who survive to additional checkups (after TIME 0), where checkups provide information about a later transition.</p>
+<p>But we <em>don't</em> want age information, because we will need to update that later, based on time to transition(s).</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -15542,11 +15680,17 @@ Name: PREVHYP, dtype: int64</pre>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms2</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIME&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> 
-                         <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;PREVHYP&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> 
-                         <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEHYP&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">last_day_of_study</span><span class="p">)]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms2</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEHYP&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;PREVHYP&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> 
+                         <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;HYPERTEN&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEHYP&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">last_day_of_study</span><span class="p">)</span> <span class="o">&amp;</span>
+                        <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;DEATH&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;CVD&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">framingham_ms2b</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEHYP&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;PREVHYP&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> 
+                         <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;HYPERTEN&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEHYP&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">last_day_of_study</span><span class="p">)</span> <span class="o">&amp;</span>
+                        <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;DEATH&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;CVD&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
 <span class="n">framingham_ms2</span><span class="p">[</span><span class="s2">&quot;STATE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">framingham_ms2</span><span class="p">[</span><span class="s2">&quot;DAYS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framingham_ms2</span><span class="p">[</span><span class="s2">&quot;TIMEHYP&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">framingham_ms2</span><span class="p">[</span><span class="s2">&quot;AGE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framingham_ms2b</span><span class="p">[</span><span class="s2">&quot;AGE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">framingham_ms2</span>
 </pre></div>
 
@@ -15590,13 +15734,15 @@ Name: PREVHYP, dtype: int64</pre>
       <th>RANDID</th>
       <th>TIME</th>
       <th>PERIOD</th>
+      <th>CVD</th>
       <th>TIMECVD</th>
+      <th>DEATH</th>
       <th>TIMEDTH</th>
+      <th>HYPERTEN</th>
       <th>TIMEHYP</th>
       <th>PREVHYP</th>
       <th>AGE</th>
       <th>SEX</th>
-      <th>BMI</th>
       <th>CURSMOKE</th>
       <th>DIABETES</th>
       <th>STATE</th>
@@ -15610,13 +15756,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>11252</td>
       <td>2072</td>
       <td>2</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>4285</td>
       <td>0</td>
-      <td>51</td>
+      <td>46</td>
       <td>2</td>
-      <td>23.48</td>
       <td>1</td>
       <td>0</td>
       <td>2</td>
@@ -15624,75 +15772,83 @@ Name: PREVHYP, dtype: int64</pre>
     </tr>
     <tr>
       <th>1</th>
-      <td>18</td>
-      <td>12806</td>
-      <td>2170</td>
-      <td>2</td>
-      <td>8766</td>
-      <td>8766</td>
-      <td>8679</td>
+      <td>15</td>
+      <td>12629</td>
       <td>0</td>
-      <td>51</td>
-      <td>2</td>
-      <td>22.19</td>
       <td>1</td>
       <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>2212</td>
+      <td>0</td>
+      <td>63</td>
       <td>2</td>
-      <td>8679</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2212</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>36</td>
-      <td>24721</td>
-      <td>2268</td>
-      <td>2</td>
-      <td>6411</td>
-      <td>6411</td>
-      <td>4408</td>
+      <td>19</td>
+      <td>12806</td>
+      <td>4289</td>
+      <td>3</td>
       <td>0</td>
-      <td>46</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>8679</td>
+      <td>0</td>
+      <td>45</td>
       <td>2</td>
-      <td>21.24</td>
       <td>1</td>
       <td>0</td>
       <td>2</td>
-      <td>4408</td>
+      <td>8679</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>50</td>
-      <td>40435</td>
-      <td>2198</td>
-      <td>2</td>
-      <td>8766</td>
-      <td>8766</td>
-      <td>5933</td>
+      <td>43</td>
+      <td>34689</td>
       <td>0</td>
-      <td>48</td>
+      <td>1</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>2157</td>
+      <td>0</td>
+      <td>38</td>
       <td>2</td>
-      <td>21.77</td>
       <td>1</td>
       <td>0</td>
       <td>2</td>
-      <td>5933</td>
+      <td>2157</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>53</td>
-      <td>43522</td>
-      <td>2225</td>
-      <td>2</td>
+      <td>46</td>
+      <td>36459</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
-      <td>5226</td>
+      <td>1</td>
+      <td>1469</td>
       <td>0</td>
-      <td>49</td>
+      <td>41</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
       <td>2</td>
-      <td>34.55</td>
-      <td>0</td>
-      <td>0</td>
-      <td>2</td>
-      <td>5226</td>
+      <td>1469</td>
     </tr>
     <tr>
       <th>...</th>
@@ -15711,92 +15867,104 @@ Name: PREVHYP, dtype: int64</pre>
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>1143</th>
-      <td>11591</td>
-      <td>9967157</td>
-      <td>2195</td>
+      <th>1173</th>
+      <td>11561</td>
+      <td>9939850</td>
+      <td>2064</td>
       <td>2</td>
-      <td>3273</td>
-      <td>7362</td>
-      <td>7362</td>
       <td>0</td>
-      <td>64</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
       <td>1</td>
-      <td>24.86</td>
+      <td>4416</td>
+      <td>0</td>
+      <td>56</td>
+      <td>2</td>
       <td>0</td>
       <td>0</td>
       <td>2</td>
-      <td>7362</td>
+      <td>4416</td>
     </tr>
     <tr>
-      <th>1144</th>
-      <td>11594</td>
-      <td>9968499</td>
-      <td>1999</td>
-      <td>2</td>
-      <td>4177</td>
-      <td>4177</td>
-      <td>4177</td>
+      <th>1174</th>
+      <td>11568</td>
+      <td>9948320</td>
       <td>0</td>
-      <td>49</td>
-      <td>1</td>
-      <td>24.91</td>
       <td>1</td>
       <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>1491</td>
+      <td>0</td>
+      <td>52</td>
       <td>2</td>
-      <td>4177</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>1491</td>
     </tr>
     <tr>
-      <th>1145</th>
-      <td>11611</td>
-      <td>9989287</td>
-      <td>2148</td>
+      <th>1175</th>
+      <td>11572</td>
+      <td>9949037</td>
+      <td>2205</td>
       <td>2</td>
-      <td>7746</td>
-      <td>7746</td>
-      <td>7746</td>
       <td>0</td>
-      <td>57</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
       <td>1</td>
-      <td>17.65</td>
+      <td>2856</td>
+      <td>0</td>
+      <td>48</td>
       <td>1</td>
+      <td>0</td>
       <td>0</td>
       <td>2</td>
-      <td>7746</td>
+      <td>2856</td>
     </tr>
     <tr>
-      <th>1146</th>
-      <td>11617</td>
-      <td>9993179</td>
-      <td>2226</td>
-      <td>2</td>
-      <td>6729</td>
-      <td>6729</td>
-      <td>4396</td>
+      <th>1176</th>
+      <td>11584</td>
+      <td>9961615</td>
       <td>0</td>
-      <td>50</td>
-      <td>2</td>
-      <td>21.22</td>
+      <td>1</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>2205</td>
+      <td>0</td>
+      <td>45</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>2</td>
-      <td>4396</td>
+      <td>2205</td>
     </tr>
     <tr>
-      <th>1147</th>
+      <th>1177</th>
       <td>11625</td>
       <td>9999312</td>
       <td>2390</td>
       <td>2</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>4201</td>
       <td>0</td>
-      <td>46</td>
+      <td>39</td>
       <td>2</td>
-      <td>26.39</td>
       <td>1</td>
       <td>0</td>
       <td>2</td>
@@ -15804,7 +15972,889 @@ Name: PREVHYP, dtype: int64</pre>
     </tr>
   </tbody>
 </table>
-<p>1148 rows × 15 columns</p>
+<p>1178 rows × 17 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms_temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">framingham_ms1</span><span class="p">,</span> <span class="n">framingham_ms2</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">framingham_ms_temp</span> <span class="o">=</span> <span class="n">framingham_ms_temp</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">,</span> <span class="s2">&quot;DAYS&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">framingham_ms_temp</span> <span class="o">=</span> <span class="n">framingham_ms_temp</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;level_0&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">framingham_ms_temp</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[17]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RANDID</th>
+      <th>TIME</th>
+      <th>PERIOD</th>
+      <th>CVD</th>
+      <th>TIMECVD</th>
+      <th>DEATH</th>
+      <th>TIMEDTH</th>
+      <th>HYPERTEN</th>
+      <th>TIMEHYP</th>
+      <th>PREVHYP</th>
+      <th>AGE</th>
+      <th>SEX</th>
+      <th>CURSMOKE</th>
+      <th>DIABETES</th>
+      <th>STATE</th>
+      <th>DAYS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2448</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>6438</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>39</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6238</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>46</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>9428</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>48</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10552</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2089</td>
+      <td>1</td>
+      <td>2956</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>61</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>11252</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>4285</td>
+      <td>0</td>
+      <td>46</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5388</th>
+      <td>9939850</td>
+      <td>2064</td>
+      <td>2</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>4416</td>
+      <td>0</td>
+      <td>56</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>4416</td>
+    </tr>
+    <tr>
+      <th>5389</th>
+      <td>9948320</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>1491</td>
+      <td>0</td>
+      <td>52</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>1491</td>
+    </tr>
+    <tr>
+      <th>5390</th>
+      <td>9949037</td>
+      <td>2205</td>
+      <td>2</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>2856</td>
+      <td>0</td>
+      <td>48</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2856</td>
+    </tr>
+    <tr>
+      <th>5391</th>
+      <td>9961615</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>2205</td>
+      <td>0</td>
+      <td>45</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2205</td>
+    </tr>
+    <tr>
+      <th>5392</th>
+      <td>9999312</td>
+      <td>2390</td>
+      <td>2</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>4201</td>
+      <td>0</td>
+      <td>39</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2</td>
+      <td>4201</td>
+    </tr>
+  </tbody>
+</table>
+<p>5393 rows × 16 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms3</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMECVD&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;CVD&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> 
+                         <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMECVD&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">last_day_of_study</span><span class="p">)]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">framingham_ms3b</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMECVD&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;CVD&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> 
+                          <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMECVD&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">last_day_of_study</span><span class="p">)]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">framingham_ms3</span><span class="p">[</span><span class="s2">&quot;STATE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">framingham_ms3</span><span class="p">[</span><span class="s2">&quot;DAYS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framingham_ms3</span><span class="p">[</span><span class="s2">&quot;TIMECVD&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">framingham_ms3</span><span class="p">[</span><span class="s2">&quot;AGE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framingham_ms3b</span><span class="p">[</span><span class="s2">&quot;AGE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">framingham_ms3</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>index</th>
+      <th>RANDID</th>
+      <th>TIME</th>
+      <th>PERIOD</th>
+      <th>CVD</th>
+      <th>TIMECVD</th>
+      <th>DEATH</th>
+      <th>TIMEDTH</th>
+      <th>HYPERTEN</th>
+      <th>TIMEHYP</th>
+      <th>PREVHYP</th>
+      <th>AGE</th>
+      <th>SEX</th>
+      <th>CURSMOKE</th>
+      <th>DIABETES</th>
+      <th>STATE</th>
+      <th>DAYS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2448</td>
+      <td>4628</td>
+      <td>3</td>
+      <td>1</td>
+      <td>6438</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>39</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>6438</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>8</td>
+      <td>10552</td>
+      <td>1977</td>
+      <td>2</td>
+      <td>1</td>
+      <td>2089</td>
+      <td>1</td>
+      <td>2956</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>61</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>2089</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>14</td>
+      <td>11263</td>
+      <td>4351</td>
+      <td>3</td>
+      <td>1</td>
+      <td>5719</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>43</td>
+      <td>2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3</td>
+      <td>5719</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>57</td>
+      <td>43770</td>
+      <td>4375</td>
+      <td>3</td>
+      <td>1</td>
+      <td>6384</td>
+      <td>1</td>
+      <td>6410</td>
+      <td>1</td>
+      <td>723</td>
+      <td>1</td>
+      <td>52</td>
+      <td>2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3</td>
+      <td>6384</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>64</td>
+      <td>54224</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>430</td>
+      <td>1</td>
+      <td>430</td>
+      <td>0</td>
+      <td>430</td>
+      <td>0</td>
+      <td>47</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>430</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>991</th>
+      <td>11591</td>
+      <td>9967157</td>
+      <td>2195</td>
+      <td>2</td>
+      <td>1</td>
+      <td>3273</td>
+      <td>1</td>
+      <td>7362</td>
+      <td>0</td>
+      <td>7362</td>
+      <td>0</td>
+      <td>58</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>3273</td>
+    </tr>
+    <tr>
+      <th>992</th>
+      <td>11597</td>
+      <td>9969773</td>
+      <td>4305</td>
+      <td>3</td>
+      <td>1</td>
+      <td>7994</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>50</td>
+      <td>2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3</td>
+      <td>7994</td>
+    </tr>
+    <tr>
+      <th>993</th>
+      <td>11606</td>
+      <td>9982118</td>
+      <td>4429</td>
+      <td>3</td>
+      <td>1</td>
+      <td>8346</td>
+      <td>1</td>
+      <td>8457</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>58</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>8346</td>
+    </tr>
+    <tr>
+      <th>994</th>
+      <td>11608</td>
+      <td>9984683</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1884</td>
+      <td>1</td>
+      <td>4300</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>50</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>1884</td>
+    </tr>
+    <tr>
+      <th>995</th>
+      <td>11620</td>
+      <td>9995546</td>
+      <td>2186</td>
+      <td>2</td>
+      <td>1</td>
+      <td>5209</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>735</td>
+      <td>1</td>
+      <td>52</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>5209</td>
+    </tr>
+  </tbody>
+</table>
+<p>996 rows × 17 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms_temp2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">framingham_ms_temp</span><span class="p">,</span> <span class="n">framingham_ms3</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">framingham_ms_temp2</span> <span class="o">=</span> <span class="n">framingham_ms_temp2</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">,</span> <span class="s2">&quot;DAYS&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">framingham_ms_temp2</span> <span class="o">=</span> <span class="n">framingham_ms_temp2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;level_0&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">framingham_ms_temp2</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[19]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RANDID</th>
+      <th>TIME</th>
+      <th>PERIOD</th>
+      <th>CVD</th>
+      <th>TIMECVD</th>
+      <th>DEATH</th>
+      <th>TIMEDTH</th>
+      <th>HYPERTEN</th>
+      <th>TIMEHYP</th>
+      <th>PREVHYP</th>
+      <th>AGE</th>
+      <th>SEX</th>
+      <th>CURSMOKE</th>
+      <th>DIABETES</th>
+      <th>STATE</th>
+      <th>DAYS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2448</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>6438</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>39</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6238</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>46</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>9428</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>48</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10552</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2089</td>
+      <td>1</td>
+      <td>2956</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>61</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>11252</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>4285</td>
+      <td>0</td>
+      <td>46</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6384</th>
+      <td>9967157</td>
+      <td>2195</td>
+      <td>2</td>
+      <td>1</td>
+      <td>3273</td>
+      <td>1</td>
+      <td>7362</td>
+      <td>0</td>
+      <td>7362</td>
+      <td>0</td>
+      <td>58</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>3273</td>
+    </tr>
+    <tr>
+      <th>6385</th>
+      <td>9969773</td>
+      <td>4305</td>
+      <td>3</td>
+      <td>1</td>
+      <td>7994</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>50</td>
+      <td>2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3</td>
+      <td>7994</td>
+    </tr>
+    <tr>
+      <th>6386</th>
+      <td>9982118</td>
+      <td>4429</td>
+      <td>3</td>
+      <td>1</td>
+      <td>8346</td>
+      <td>1</td>
+      <td>8457</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>58</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>8346</td>
+    </tr>
+    <tr>
+      <th>6387</th>
+      <td>9984683</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1884</td>
+      <td>1</td>
+      <td>4300</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>50</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>1884</td>
+    </tr>
+    <tr>
+      <th>6388</th>
+      <td>9995546</td>
+      <td>2186</td>
+      <td>2</td>
+      <td>1</td>
+      <td>5209</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>735</td>
+      <td>1</td>
+      <td>52</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>5209</td>
+    </tr>
+  </tbody>
+</table>
+<p>6389 rows × 16 columns</p>
 </div>
 </div>
 
@@ -15820,10 +16870,16 @@ Name: PREVHYP, dtype: int64</pre>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms_temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">framingham_ms1</span><span class="p">,</span> <span class="n">framingham_ms2</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">framingham_ms_temp</span> <span class="o">=</span> <span class="n">framingham_ms_temp</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">,</span> <span class="s2">&quot;DAYS&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-<span class="n">framingham_ms_temp</span> <span class="o">=</span> <span class="n">framingham_ms_temp</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;level_0&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">framingham_ms_temp</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms4</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEDTH&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;DEATH&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> 
+                         <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEDTH&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">last_day_of_study</span><span class="p">)]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">framingham_ms4b</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEDTH&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;DEATH&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> 
+                         <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEDTH&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">last_day_of_study</span><span class="p">)]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">framingham_ms4</span><span class="p">[</span><span class="s2">&quot;STATE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">framingham_ms4</span><span class="p">[</span><span class="s2">&quot;DAYS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framingham_ms4</span><span class="p">[</span><span class="s2">&quot;TIMEDTH&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">framingham_ms4</span><span class="p">[</span><span class="s2">&quot;AGE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framingham_ms4b</span><span class="p">[</span><span class="s2">&quot;AGE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">framingham_ms4</span>
 </pre></div>
 
      </div>
@@ -15862,16 +16918,19 @@ Name: PREVHYP, dtype: int64</pre>
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>index</th>
       <th>RANDID</th>
       <th>TIME</th>
       <th>PERIOD</th>
+      <th>CVD</th>
       <th>TIMECVD</th>
+      <th>DEATH</th>
       <th>TIMEDTH</th>
+      <th>HYPERTEN</th>
       <th>TIMEHYP</th>
       <th>PREVHYP</th>
       <th>AGE</th>
       <th>SEX</th>
-      <th>BMI</th>
       <th>CURSMOKE</th>
       <th>DIABETES</th>
       <th>STATE</th>
@@ -15881,88 +16940,103 @@ Name: PREVHYP, dtype: int64</pre>
   <tbody>
     <tr>
       <th>0</th>
-      <td>2448</td>
-      <td>0</td>
-      <td>1</td>
-      <td>6438</td>
-      <td>8766</td>
-      <td>8766</td>
-      <td>0</td>
-      <td>39</td>
-      <td>1</td>
-      <td>26.97</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>6238</td>
-      <td>0</td>
-      <td>1</td>
-      <td>8766</td>
-      <td>8766</td>
-      <td>8766</td>
-      <td>0</td>
-      <td>46</td>
-      <td>2</td>
-      <td>28.73</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>9428</td>
-      <td>0</td>
-      <td>1</td>
-      <td>8766</td>
-      <td>8766</td>
-      <td>8766</td>
-      <td>0</td>
-      <td>48</td>
-      <td>1</td>
-      <td>25.34</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
+      <td>8</td>
       <td>10552</td>
-      <td>0</td>
+      <td>1977</td>
+      <td>2</td>
       <td>1</td>
       <td>2089</td>
+      <td>1</td>
       <td>2956</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>61</td>
       <td>2</td>
-      <td>28.58</td>
       <td>1</td>
       <td>0</td>
+      <td>4</td>
+      <td>2956</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>34</td>
+      <td>23727</td>
+      <td>4503</td>
+      <td>3</td>
+      <td>0</td>
+      <td>5592</td>
+      <td>1</td>
+      <td>5592</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>41</td>
       <td>2</td>
       <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>5592</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>37</td>
+      <td>24721</td>
+      <td>4408</td>
+      <td>3</td>
+      <td>0</td>
+      <td>6411</td>
+      <td>1</td>
+      <td>6411</td>
+      <td>1</td>
+      <td>4408</td>
+      <td>1</td>
+      <td>39</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>6411</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>38</td>
+      <td>30928</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>146</td>
+      <td>1</td>
+      <td>146</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>38</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>146</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>11252</td>
+      <td>42</td>
+      <td>33555</td>
       <td>0</td>
       <td>1</td>
-      <td>8766</td>
-      <td>8766</td>
-      <td>4285</td>
+      <td>0</td>
+      <td>1442</td>
+      <td>1</td>
+      <td>1442</td>
+      <td>0</td>
+      <td>1442</td>
       <td>0</td>
       <td>46</td>
       <td>2</td>
-      <td>23.1</td>
       <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>0</td>
+      <td>4</td>
+      <td>1442</td>
     </tr>
     <tr>
       <th>...</th>
@@ -15980,95 +17054,113 @@ Name: PREVHYP, dtype: int64</pre>
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>5358</th>
-      <td>9967157</td>
-      <td>2195</td>
-      <td>2</td>
-      <td>3273</td>
-      <td>7362</td>
-      <td>7362</td>
+      <th>1383</th>
+      <td>11607</td>
+      <td>9983319</td>
       <td>0</td>
-      <td>64</td>
       <td>1</td>
-      <td>24.86</td>
+      <td>0</td>
+      <td>565</td>
+      <td>1</td>
+      <td>565</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>68</td>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>2</td>
-      <td>7362</td>
+      <td>4</td>
+      <td>565</td>
     </tr>
     <tr>
-      <th>5359</th>
-      <td>9968499</td>
-      <td>1999</td>
-      <td>2</td>
-      <td>4177</td>
-      <td>4177</td>
-      <td>4177</td>
+      <th>1384</th>
+      <td>11608</td>
+      <td>9984683</td>
       <td>0</td>
-      <td>49</td>
       <td>1</td>
-      <td>24.91</td>
+      <td>1</td>
+      <td>1884</td>
+      <td>1</td>
+      <td>4300</td>
       <td>1</td>
       <td>0</td>
-      <td>2</td>
-      <td>4177</td>
-    </tr>
-    <tr>
-      <th>5360</th>
-      <td>9989287</td>
-      <td>2148</td>
-      <td>2</td>
-      <td>7746</td>
-      <td>7746</td>
-      <td>7746</td>
-      <td>0</td>
-      <td>57</td>
       <td>1</td>
-      <td>17.65</td>
-      <td>1</td>
-      <td>0</td>
-      <td>2</td>
-      <td>7746</td>
-    </tr>
-    <tr>
-      <th>5361</th>
-      <td>9993179</td>
-      <td>2226</td>
-      <td>2</td>
-      <td>6729</td>
-      <td>6729</td>
-      <td>4396</td>
-      <td>0</td>
       <td>50</td>
-      <td>2</td>
-      <td>21.22</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
-      <td>2</td>
-      <td>4396</td>
+      <td>4</td>
+      <td>4300</td>
     </tr>
     <tr>
-      <th>5362</th>
-      <td>9999312</td>
-      <td>2390</td>
-      <td>2</td>
-      <td>8766</td>
-      <td>8766</td>
-      <td>4201</td>
+      <th>1385</th>
+      <td>11612</td>
+      <td>9989287</td>
+      <td>4439</td>
+      <td>3</td>
       <td>0</td>
-      <td>46</td>
-      <td>2</td>
-      <td>26.39</td>
+      <td>7746</td>
+      <td>1</td>
+      <td>7746</td>
+      <td>0</td>
+      <td>7746</td>
+      <td>0</td>
+      <td>51</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
+      <td>4</td>
+      <td>7746</td>
+    </tr>
+    <tr>
+      <th>1386</th>
+      <td>11615</td>
+      <td>9990894</td>
+      <td>4417</td>
+      <td>3</td>
+      <td>0</td>
+      <td>6433</td>
+      <td>1</td>
+      <td>6433</td>
+      <td>1</td>
+      <td>2219</td>
+      <td>1</td>
+      <td>48</td>
       <td>2</td>
-      <td>4201</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>6433</td>
+    </tr>
+    <tr>
+      <th>1387</th>
+      <td>11618</td>
+      <td>9993179</td>
+      <td>4396</td>
+      <td>3</td>
+      <td>0</td>
+      <td>6729</td>
+      <td>1</td>
+      <td>6729</td>
+      <td>1</td>
+      <td>4396</td>
+      <td>1</td>
+      <td>44</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>6729</td>
     </tr>
   </tbody>
 </table>
-<p>5363 rows × 14 columns</p>
+<p>1388 rows × 17 columns</p>
 </div>
 </div>
 
@@ -16078,23 +17170,16 @@ Name: PREVHYP, dtype: int64</pre>
 
 </div>
 
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Adding more State 2 people didn't result in any duplicate Days values.</p>
-<p>That makes sense, since we pre-screened those who already had Hypertension.</p>
-
-</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms3</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIME&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMECVD&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">last_day_of_study</span><span class="p">)]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-<span class="n">framingham_ms3</span><span class="p">[</span><span class="s2">&quot;STATE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">framingham_ms3</span><span class="p">[</span><span class="s2">&quot;DAYS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framingham_ms3</span><span class="p">[</span><span class="s2">&quot;TIMECVD&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">framingham_ms3</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms_temp3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">framingham_ms_temp2</span><span class="p">,</span> <span class="n">framingham_ms4</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">framingham_ms_temp3</span> <span class="o">=</span> <span class="n">framingham_ms_temp3</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">,</span> <span class="s2">&quot;DAYS&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">framingham_ms_temp3</span> <span class="o">=</span> <span class="n">framingham_ms_temp3</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;level_0&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">framingham_ms_temp3</span>
 </pre></div>
 
      </div>
@@ -16133,17 +17218,18 @@ Name: PREVHYP, dtype: int64</pre>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>index</th>
       <th>RANDID</th>
       <th>TIME</th>
       <th>PERIOD</th>
+      <th>CVD</th>
       <th>TIMECVD</th>
+      <th>DEATH</th>
       <th>TIMEDTH</th>
+      <th>HYPERTEN</th>
       <th>TIMEHYP</th>
       <th>PREVHYP</th>
       <th>AGE</th>
       <th>SEX</th>
-      <th>BMI</th>
       <th>CURSMOKE</th>
       <th>DIABETES</th>
       <th>STATE</th>
@@ -16153,93 +17239,98 @@ Name: PREVHYP, dtype: int64</pre>
   <tbody>
     <tr>
       <th>0</th>
-      <td>1</td>
       <td>2448</td>
-      <td>4628</td>
-      <td>3</td>
-      <td>6438</td>
-      <td>8766</td>
-      <td>8766</td>
       <td>0</td>
-      <td>52</td>
       <td>1</td>
-      <td>.</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
+      <td>1</td>
       <td>6438</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>39</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>8</td>
-      <td>10552</td>
-      <td>1977</td>
-      <td>2</td>
-      <td>2089</td>
-      <td>2956</td>
+      <td>6238</td>
       <td>0</td>
       <td>1</td>
-      <td>67</td>
-      <td>2</td>
-      <td>30.18</td>
-      <td>1</td>
       <td>0</td>
-      <td>3</td>
-      <td>2089</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>13</td>
-      <td>11263</td>
-      <td>2178</td>
-      <td>2</td>
-      <td>5719</td>
       <td>8766</td>
       <td>0</td>
-      <td>1</td>
-      <td>49</td>
-      <td>2</td>
-      <td>31.36</td>
+      <td>8766</td>
       <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>5719</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>33</td>
-      <td>23727</td>
-      <td>2287</td>
-      <td>2</td>
-      <td>5592</td>
-      <td>5592</td>
-      <td>0</td>
-      <td>1</td>
-      <td>47</td>
-      <td>2</td>
-      <td>27.98</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>5592</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>36</td>
-      <td>24721</td>
-      <td>2268</td>
-      <td>2</td>
-      <td>6411</td>
-      <td>6411</td>
-      <td>4408</td>
+      <td>8766</td>
       <td>0</td>
       <td>46</td>
       <td>2</td>
-      <td>21.24</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
       <td>0</td>
-      <td>3</td>
-      <td>6411</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>9428</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>48</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10552</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2089</td>
+      <td>1</td>
+      <td>2956</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>61</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>11252</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>4285</td>
+      <td>0</td>
+      <td>46</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>...</th>
@@ -16258,100 +17349,106 @@ Name: PREVHYP, dtype: int64</pre>
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>1310</th>
-      <td>11605</td>
-      <td>9982118</td>
-      <td>2253</td>
-      <td>2</td>
-      <td>8346</td>
-      <td>8457</td>
+      <th>7620</th>
+      <td>9983319</td>
       <td>0</td>
       <td>1</td>
-      <td>64</td>
+      <td>0</td>
+      <td>565</td>
       <td>1</td>
-      <td>25.56</td>
+      <td>565</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>68</td>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>3</td>
-      <td>8346</td>
+      <td>4</td>
+      <td>565</td>
     </tr>
     <tr>
-      <th>1311</th>
-      <td>11611</td>
-      <td>9989287</td>
-      <td>2148</td>
-      <td>2</td>
-      <td>7746</td>
-      <td>7746</td>
-      <td>7746</td>
+      <th>7621</th>
+      <td>9984683</td>
       <td>0</td>
-      <td>57</td>
       <td>1</td>
-      <td>17.65</td>
+      <td>1</td>
+      <td>1884</td>
+      <td>1</td>
+      <td>4300</td>
       <td>1</td>
       <td>0</td>
-      <td>3</td>
-      <td>7746</td>
-    </tr>
-    <tr>
-      <th>1312</th>
-      <td>11614</td>
-      <td>9990894</td>
-      <td>2219</td>
-      <td>2</td>
-      <td>6433</td>
-      <td>6433</td>
-      <td>2219</td>
       <td>1</td>
-      <td>54</td>
-      <td>2</td>
-      <td>21.64</td>
-      <td>1</td>
-      <td>0</td>
-      <td>3</td>
-      <td>6433</td>
-    </tr>
-    <tr>
-      <th>1313</th>
-      <td>11617</td>
-      <td>9993179</td>
-      <td>2226</td>
-      <td>2</td>
-      <td>6729</td>
-      <td>6729</td>
-      <td>4396</td>
-      <td>0</td>
       <td>50</td>
-      <td>2</td>
-      <td>21.22</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
-      <td>3</td>
-      <td>6729</td>
+      <td>4</td>
+      <td>4300</td>
     </tr>
     <tr>
-      <th>1314</th>
-      <td>11620</td>
-      <td>9995546</td>
-      <td>2186</td>
-      <td>2</td>
-      <td>5209</td>
-      <td>8766</td>
-      <td>735</td>
-      <td>1</td>
-      <td>58</td>
-      <td>2</td>
-      <td>22.55</td>
-      <td>0</td>
-      <td>0</td>
+      <th>7622</th>
+      <td>9989287</td>
+      <td>4439</td>
       <td>3</td>
-      <td>5209</td>
+      <td>0</td>
+      <td>7746</td>
+      <td>1</td>
+      <td>7746</td>
+      <td>0</td>
+      <td>7746</td>
+      <td>0</td>
+      <td>51</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>7746</td>
+    </tr>
+    <tr>
+      <th>7623</th>
+      <td>9990894</td>
+      <td>4417</td>
+      <td>3</td>
+      <td>0</td>
+      <td>6433</td>
+      <td>1</td>
+      <td>6433</td>
+      <td>1</td>
+      <td>2219</td>
+      <td>1</td>
+      <td>48</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>6433</td>
+    </tr>
+    <tr>
+      <th>7624</th>
+      <td>9993179</td>
+      <td>4396</td>
+      <td>3</td>
+      <td>0</td>
+      <td>6729</td>
+      <td>1</td>
+      <td>6729</td>
+      <td>1</td>
+      <td>4396</td>
+      <td>1</td>
+      <td>44</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>6729</td>
     </tr>
   </tbody>
 </table>
-<p>1315 rows × 15 columns</p>
+<p>7625 rows × 16 columns</p>
 </div>
 </div>
 
@@ -16367,10 +17464,19 @@ Name: PREVHYP, dtype: int64</pre>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms_temp2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">framingham_ms_temp</span><span class="p">,</span> <span class="n">framingham_ms3</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">framingham_ms_temp2</span> <span class="o">=</span> <span class="n">framingham_ms_temp2</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">,</span> <span class="s2">&quot;DAYS&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-<span class="n">framingham_ms_temp2</span> <span class="o">=</span> <span class="n">framingham_ms_temp2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;level_0&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">framingham_ms_temp2</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Defining the Censored Population:</span>
+<span class="c1"># those who reached the end of their involvement, or the study without dying regardless of state.</span>
+
+<span class="n">framingham_ms5</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[((</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEDTH&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> 
+                          <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;DEATH&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> 
+                          <span class="p">((</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;CVD&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;HYPERTEN&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)))]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">framingham_ms5b</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[((</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEDTH&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> 
+                          <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;DEATH&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> 
+                          <span class="p">((</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;CVD&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;HYPERTEN&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)))]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">framingham_ms5</span><span class="p">[</span><span class="s2">&quot;STATE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">99</span>
+<span class="n">framingham_ms5</span><span class="p">[</span><span class="s2">&quot;DAYS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framingham_ms5</span><span class="p">[</span><span class="s2">&quot;TIMEDTH&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">framingham_ms5</span><span class="p">[</span><span class="s2">&quot;AGE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framingham_ms5b</span><span class="p">[</span><span class="s2">&quot;AGE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">framingham_ms5</span>
 </pre></div>
 
      </div>
@@ -16409,16 +17515,19 @@ Name: PREVHYP, dtype: int64</pre>
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>index</th>
       <th>RANDID</th>
       <th>TIME</th>
       <th>PERIOD</th>
+      <th>CVD</th>
       <th>TIMECVD</th>
+      <th>DEATH</th>
       <th>TIMEDTH</th>
+      <th>HYPERTEN</th>
       <th>TIMEHYP</th>
       <th>PREVHYP</th>
       <th>AGE</th>
       <th>SEX</th>
-      <th>BMI</th>
       <th>CURSMOKE</th>
       <th>DIABETES</th>
       <th>STATE</th>
@@ -16428,88 +17537,103 @@ Name: PREVHYP, dtype: int64</pre>
   <tbody>
     <tr>
       <th>0</th>
+      <td>1</td>
       <td>2448</td>
-      <td>0</td>
+      <td>4628</td>
+      <td>3</td>
       <td>1</td>
       <td>6438</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>39</td>
       <td>1</td>
-      <td>26.97</td>
       <td>0</td>
       <td>0</td>
-      <td>1</td>
-      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
     </tr>
     <tr>
       <th>1</th>
+      <td>4</td>
       <td>6238</td>
+      <td>4344</td>
+      <td>3</td>
       <td>0</td>
-      <td>1</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>46</td>
       <td>2</td>
-      <td>28.73</td>
       <td>0</td>
       <td>0</td>
-      <td>1</td>
-      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
     </tr>
     <tr>
       <th>2</th>
+      <td>6</td>
       <td>9428</td>
+      <td>2199</td>
+      <td>2</td>
       <td>0</td>
-      <td>1</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>48</td>
       <td>1</td>
-      <td>25.34</td>
       <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>10552</td>
+      <td>11</td>
+      <td>11252</td>
+      <td>4285</td>
+      <td>3</td>
       <td>0</td>
-      <td>1</td>
-      <td>2089</td>
-      <td>2956</td>
+      <td>8766</td>
       <td>0</td>
+      <td>8766</td>
       <td>1</td>
-      <td>61</td>
+      <td>4285</td>
+      <td>1</td>
+      <td>46</td>
       <td>2</td>
-      <td>28.58</td>
       <td>1</td>
       <td>0</td>
-      <td>2</td>
-      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>11252</td>
+      <td>15</td>
+      <td>12629</td>
       <td>0</td>
       <td>1</td>
-      <td>8766</td>
-      <td>8766</td>
-      <td>4285</td>
       <td>0</td>
-      <td>46</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>2212</td>
+      <td>0</td>
+      <td>63</td>
       <td>2</td>
-      <td>23.1</td>
-      <td>1</td>
       <td>0</td>
-      <td>1</td>
       <td>0</td>
+      <td>99</td>
+      <td>8766</td>
     </tr>
     <tr>
       <th>...</th>
@@ -16527,95 +17651,113 @@ Name: PREVHYP, dtype: int64</pre>
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>6501</th>
-      <td>9982118</td>
-      <td>2253</td>
+      <th>2502</th>
+      <td>11583</td>
+      <td>9960803</td>
+      <td>2187</td>
       <td>2</td>
-      <td>8346</td>
-      <td>8457</td>
       <td>0</td>
-      <td>1</td>
-      <td>64</td>
-      <td>1</td>
-      <td>25.56</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>8346</td>
-    </tr>
-    <tr>
-      <th>6502</th>
-      <td>9989287</td>
-      <td>2148</td>
-      <td>2</td>
-      <td>7746</td>
-      <td>7746</td>
-      <td>7746</td>
-      <td>0</td>
-      <td>57</td>
-      <td>1</td>
-      <td>17.65</td>
-      <td>1</td>
-      <td>0</td>
-      <td>3</td>
-      <td>7746</td>
-    </tr>
-    <tr>
-      <th>6503</th>
-      <td>9990894</td>
-      <td>2219</td>
-      <td>2</td>
-      <td>6433</td>
-      <td>6433</td>
-      <td>2219</td>
-      <td>1</td>
-      <td>54</td>
-      <td>2</td>
-      <td>21.64</td>
-      <td>1</td>
-      <td>0</td>
-      <td>3</td>
-      <td>6433</td>
-    </tr>
-    <tr>
-      <th>6504</th>
-      <td>9993179</td>
-      <td>2226</td>
-      <td>2</td>
-      <td>6729</td>
-      <td>6729</td>
-      <td>4396</td>
-      <td>0</td>
-      <td>50</td>
-      <td>2</td>
-      <td>21.22</td>
-      <td>1</td>
-      <td>0</td>
-      <td>3</td>
-      <td>6729</td>
-    </tr>
-    <tr>
-      <th>6505</th>
-      <td>9995546</td>
-      <td>2186</td>
-      <td>2</td>
-      <td>5209</td>
       <td>8766</td>
-      <td>735</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>47</td>
       <td>1</td>
-      <td>58</td>
-      <td>2</td>
-      <td>22.55</td>
       <td>0</td>
       <td>0</td>
+      <td>99</td>
+      <td>8766</td>
+    </tr>
+    <tr>
+      <th>2503</th>
+      <td>11586</td>
+      <td>9961615</td>
+      <td>4684</td>
       <td>3</td>
-      <td>5209</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>2205</td>
+      <td>1</td>
+      <td>45</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>99</td>
+      <td>8766</td>
+    </tr>
+    <tr>
+      <th>2504</th>
+      <td>11603</td>
+      <td>9978986</td>
+      <td>4230</td>
+      <td>3</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>56</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
+    </tr>
+    <tr>
+      <th>2505</th>
+      <td>11623</td>
+      <td>9998212</td>
+      <td>4538</td>
+      <td>3</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>40</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
+    </tr>
+    <tr>
+      <th>2506</th>
+      <td>11626</td>
+      <td>9999312</td>
+      <td>4201</td>
+      <td>3</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>4201</td>
+      <td>1</td>
+      <td>39</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
     </tr>
   </tbody>
 </table>
-<p>6506 rows × 14 columns</p>
+<p>2507 rows × 17 columns</p>
 </div>
 </div>
 
@@ -16625,24 +17767,16 @@ Name: PREVHYP, dtype: int64</pre>
 
 </div>
 
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Now that we've added the State 3 people, however, we can see that there were duplicates.</p>
-<p>While the original # of persons who got CVD was 1,315, only 1,143 rows were added to the final dataframe.</p>
-<p>This means 172 people got Hypertension and CVD on the same day.</p>
-
-</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[23]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms4</span> <span class="o">=</span> <span class="n">at_risk</span><span class="p">[(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIME&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">at_risk</span><span class="p">[</span><span class="s2">&quot;TIMEDTH&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">last_day_of_study</span><span class="p">)]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-<span class="n">framingham_ms4</span><span class="p">[</span><span class="s2">&quot;STATE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">framingham_ms4</span><span class="p">[</span><span class="s2">&quot;DAYS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framingham_ms4</span><span class="p">[</span><span class="s2">&quot;TIMEDTH&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">framingham_ms4</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms_temp4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">framingham_ms_temp3</span><span class="p">,</span> <span class="n">framingham_ms5</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">framingham_ms_temp4</span> <span class="o">=</span> <span class="n">framingham_ms_temp4</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">,</span> <span class="s2">&quot;DAYS&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">framingham_ms_temp4</span> <span class="o">=</span> <span class="n">framingham_ms_temp4</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;level_0&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">framingham_ms_temp4</span>
 </pre></div>
 
      </div>
@@ -16681,292 +17815,18 @@ Name: PREVHYP, dtype: int64</pre>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>index</th>
       <th>RANDID</th>
       <th>TIME</th>
       <th>PERIOD</th>
+      <th>CVD</th>
       <th>TIMECVD</th>
+      <th>DEATH</th>
       <th>TIMEDTH</th>
+      <th>HYPERTEN</th>
       <th>TIMEHYP</th>
       <th>PREVHYP</th>
       <th>AGE</th>
       <th>SEX</th>
-      <th>BMI</th>
-      <th>CURSMOKE</th>
-      <th>DIABETES</th>
-      <th>STATE</th>
-      <th>DAYS</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>8</td>
-      <td>10552</td>
-      <td>1977</td>
-      <td>2</td>
-      <td>2089</td>
-      <td>2956</td>
-      <td>0</td>
-      <td>1</td>
-      <td>67</td>
-      <td>2</td>
-      <td>30.18</td>
-      <td>1</td>
-      <td>0</td>
-      <td>4</td>
-      <td>2956</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>33</td>
-      <td>23727</td>
-      <td>2287</td>
-      <td>2</td>
-      <td>5592</td>
-      <td>5592</td>
-      <td>0</td>
-      <td>1</td>
-      <td>47</td>
-      <td>2</td>
-      <td>27.98</td>
-      <td>0</td>
-      <td>0</td>
-      <td>4</td>
-      <td>5592</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>36</td>
-      <td>24721</td>
-      <td>2268</td>
-      <td>2</td>
-      <td>6411</td>
-      <td>6411</td>
-      <td>4408</td>
-      <td>0</td>
-      <td>46</td>
-      <td>2</td>
-      <td>21.24</td>
-      <td>1</td>
-      <td>0</td>
-      <td>4</td>
-      <td>6411</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>56</td>
-      <td>43770</td>
-      <td>2198</td>
-      <td>2</td>
-      <td>6384</td>
-      <td>6410</td>
-      <td>723</td>
-      <td>1</td>
-      <td>58</td>
-      <td>2</td>
-      <td>33.29</td>
-      <td>0</td>
-      <td>1</td>
-      <td>4</td>
-      <td>6410</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>73</td>
-      <td>66472</td>
-      <td>2174</td>
-      <td>2</td>
-      <td>8085</td>
-      <td>8423</td>
-      <td>1463</td>
-      <td>1</td>
-      <td>66</td>
-      <td>2</td>
-      <td>30.16</td>
-      <td>0</td>
-      <td>0</td>
-      <td>4</td>
-      <td>8423</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>987</th>
-      <td>11599</td>
-      <td>9973350</td>
-      <td>2204</td>
-      <td>2</td>
-      <td>6562</td>
-      <td>6562</td>
-      <td>0</td>
-      <td>1</td>
-      <td>57</td>
-      <td>2</td>
-      <td>22.14</td>
-      <td>1</td>
-      <td>1</td>
-      <td>4</td>
-      <td>6562</td>
-    </tr>
-    <tr>
-      <th>988</th>
-      <td>11605</td>
-      <td>9982118</td>
-      <td>2253</td>
-      <td>2</td>
-      <td>8346</td>
-      <td>8457</td>
-      <td>0</td>
-      <td>1</td>
-      <td>64</td>
-      <td>1</td>
-      <td>25.56</td>
-      <td>0</td>
-      <td>0</td>
-      <td>4</td>
-      <td>8457</td>
-    </tr>
-    <tr>
-      <th>989</th>
-      <td>11611</td>
-      <td>9989287</td>
-      <td>2148</td>
-      <td>2</td>
-      <td>7746</td>
-      <td>7746</td>
-      <td>7746</td>
-      <td>0</td>
-      <td>57</td>
-      <td>1</td>
-      <td>17.65</td>
-      <td>1</td>
-      <td>0</td>
-      <td>4</td>
-      <td>7746</td>
-    </tr>
-    <tr>
-      <th>990</th>
-      <td>11614</td>
-      <td>9990894</td>
-      <td>2219</td>
-      <td>2</td>
-      <td>6433</td>
-      <td>6433</td>
-      <td>2219</td>
-      <td>1</td>
-      <td>54</td>
-      <td>2</td>
-      <td>21.64</td>
-      <td>1</td>
-      <td>0</td>
-      <td>4</td>
-      <td>6433</td>
-    </tr>
-    <tr>
-      <th>991</th>
-      <td>11617</td>
-      <td>9993179</td>
-      <td>2226</td>
-      <td>2</td>
-      <td>6729</td>
-      <td>6729</td>
-      <td>4396</td>
-      <td>0</td>
-      <td>50</td>
-      <td>2</td>
-      <td>21.22</td>
-      <td>1</td>
-      <td>0</td>
-      <td>4</td>
-      <td>6729</td>
-    </tr>
-  </tbody>
-</table>
-<p>992 rows × 15 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[24]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms_temp3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">framingham_ms_temp2</span><span class="p">,</span> <span class="n">framingham_ms4</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">framingham_ms_temp3</span> <span class="o">=</span> <span class="n">framingham_ms_temp3</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">,</span> <span class="s2">&quot;DAYS&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-<span class="n">framingham_ms_temp3</span> <span class="o">=</span> <span class="n">framingham_ms_temp3</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;level_0&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">framingham_ms_temp3</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[24]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>RANDID</th>
-      <th>TIME</th>
-      <th>PERIOD</th>
-      <th>TIMECVD</th>
-      <th>TIMEDTH</th>
-      <th>TIMEHYP</th>
-      <th>PREVHYP</th>
-      <th>AGE</th>
-      <th>SEX</th>
-      <th>BMI</th>
       <th>CURSMOKE</th>
       <th>DIABETES</th>
       <th>STATE</th>
@@ -16979,13 +17839,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>2448</td>
       <td>0</td>
       <td>1</td>
+      <td>1</td>
       <td>6438</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>39</td>
       <td>1</td>
-      <td>26.97</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -16996,13 +17858,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>6238</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>46</td>
       <td>2</td>
-      <td>28.73</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -17013,13 +17877,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>9428</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
       <td>0</td>
       <td>48</td>
       <td>1</td>
-      <td>25.34</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
@@ -17030,13 +17896,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>10552</td>
       <td>0</td>
       <td>1</td>
+      <td>1</td>
       <td>2089</td>
+      <td>1</td>
       <td>2956</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>61</td>
       <td>2</td>
-      <td>28.58</td>
       <td>1</td>
       <td>0</td>
       <td>2</td>
@@ -17047,13 +17915,15 @@ Name: PREVHYP, dtype: int64</pre>
       <td>11252</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>8766</td>
+      <td>0</td>
       <td>8766</td>
+      <td>1</td>
       <td>4285</td>
       <td>0</td>
       <td>46</td>
       <td>2</td>
-      <td>23.1</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
@@ -17075,95 +17945,107 @@ Name: PREVHYP, dtype: int64</pre>
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>6788</th>
-      <td>9973350</td>
-      <td>2204</td>
+      <th>10127</th>
+      <td>9960803</td>
+      <td>2187</td>
       <td>2</td>
-      <td>6562</td>
-      <td>6562</td>
       <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>47</td>
       <td>1</td>
-      <td>57</td>
-      <td>2</td>
-      <td>22.14</td>
-      <td>1</td>
-      <td>1</td>
-      <td>4</td>
-      <td>6562</td>
+      <td>0</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
     </tr>
     <tr>
-      <th>6789</th>
-      <td>9982118</td>
-      <td>2253</td>
-      <td>2</td>
-      <td>8346</td>
-      <td>8457</td>
+      <th>10128</th>
+      <td>9961615</td>
+      <td>4684</td>
+      <td>3</td>
       <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
       <td>1</td>
-      <td>64</td>
+      <td>2205</td>
       <td>1</td>
-      <td>25.56</td>
-      <td>0</td>
-      <td>0</td>
-      <td>4</td>
-      <td>8457</td>
+      <td>45</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>99</td>
+      <td>8766</td>
     </tr>
     <tr>
-      <th>6790</th>
-      <td>9989287</td>
-      <td>2148</td>
+      <th>10129</th>
+      <td>9978986</td>
+      <td>4230</td>
+      <td>3</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>56</td>
       <td>2</td>
-      <td>7746</td>
-      <td>7746</td>
-      <td>7746</td>
       <td>0</td>
-      <td>57</td>
-      <td>1</td>
-      <td>17.65</td>
-      <td>1</td>
       <td>0</td>
-      <td>4</td>
-      <td>7746</td>
+      <td>99</td>
+      <td>8766</td>
     </tr>
     <tr>
-      <th>6791</th>
-      <td>9990894</td>
-      <td>2219</td>
-      <td>2</td>
-      <td>6433</td>
-      <td>6433</td>
-      <td>2219</td>
-      <td>1</td>
-      <td>54</td>
-      <td>2</td>
-      <td>21.64</td>
+      <th>10130</th>
+      <td>9998212</td>
+      <td>4538</td>
+      <td>3</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
       <td>1</td>
       <td>0</td>
-      <td>4</td>
-      <td>6433</td>
+      <td>1</td>
+      <td>40</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
     </tr>
     <tr>
-      <th>6792</th>
-      <td>9993179</td>
-      <td>2226</td>
-      <td>2</td>
-      <td>6729</td>
-      <td>6729</td>
-      <td>4396</td>
+      <th>10131</th>
+      <td>9999312</td>
+      <td>4201</td>
+      <td>3</td>
       <td>0</td>
-      <td>50</td>
+      <td>8766</td>
+      <td>0</td>
+      <td>8766</td>
+      <td>1</td>
+      <td>4201</td>
+      <td>1</td>
+      <td>39</td>
       <td>2</td>
-      <td>21.22</td>
       <td>1</td>
       <td>0</td>
-      <td>4</td>
-      <td>6729</td>
+      <td>99</td>
+      <td>8766</td>
     </tr>
   </tbody>
 </table>
-<p>6793 rows × 14 columns</p>
+<p>10132 rows × 16 columns</p>
 </div>
 </div>
 
@@ -17176,17 +18058,31 @@ Name: PREVHYP, dtype: int64</pre>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>As we might have expected, even <strong>more</strong> persons (287) died on the same day they recieved another diagnosis.</p>
+<p>After adding in those who were censored (reached the end of the study or left before any diagnosis / state change), we have 10,132 state transitions recorded!</p>
 
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[24]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms</span> <span class="o">=</span> <span class="n">framingham_ms_temp4</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[32]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[25]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms</span> <span class="o">=</span> <span class="n">framingham_ms_temp3</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">framingham_ms</span> <span class="o">=</span> <span class="n">framingham_ms</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;TIME&quot;</span><span class="p">,</span> <span class="s2">&quot;PERIOD&quot;</span><span class="p">,</span> <span class="s2">&quot;TIMECVD&quot;</span><span class="p">,</span> <span class="s2">&quot;TIMEDTH&quot;</span><span class="p">,</span> <span class="s2">&quot;TIMEHYP&quot;</span><span class="p">,</span> <span class="s2">&quot;PREVHYP&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms</span> <span class="o">=</span> <span class="n">framingham_ms</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;TIME&quot;</span><span class="p">,</span> <span class="s2">&quot;PERIOD&quot;</span><span class="p">,</span> <span class="s2">&quot;CVD&quot;</span><span class="p">,</span> <span class="s2">&quot;TIMECVD&quot;</span><span class="p">,</span> <span class="s2">&quot;DEATH&quot;</span><span class="p">,</span> <span class="s2">&quot;TIMEDTH&quot;</span><span class="p">,</span> <span class="s2">&quot;HYPERTEN&quot;</span><span class="p">,</span> 
+                                            <span class="s2">&quot;TIMEHYP&quot;</span><span class="p">,</span> <span class="s2">&quot;PREVHYP&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;YEARS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;DAYS&quot;</span><span class="p">]</span><span class="o">/</span><span class="mi">365</span>
 <span class="n">framingham_ms</span>
 </pre></div>
@@ -17204,7 +18100,7 @@ Name: PREVHYP, dtype: int64</pre>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[32]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[25]:</div>
 
 
 
@@ -17230,7 +18126,6 @@ Name: PREVHYP, dtype: int64</pre>
       <th>RANDID</th>
       <th>AGE</th>
       <th>SEX</th>
-      <th>BMI</th>
       <th>CURSMOKE</th>
       <th>DIABETES</th>
       <th>STATE</th>
@@ -17244,7 +18139,6 @@ Name: PREVHYP, dtype: int64</pre>
       <td>2448</td>
       <td>39</td>
       <td>1</td>
-      <td>26.97</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -17256,7 +18150,6 @@ Name: PREVHYP, dtype: int64</pre>
       <td>6238</td>
       <td>46</td>
       <td>2</td>
-      <td>28.73</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -17268,7 +18161,6 @@ Name: PREVHYP, dtype: int64</pre>
       <td>9428</td>
       <td>48</td>
       <td>1</td>
-      <td>25.34</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
@@ -17280,7 +18172,6 @@ Name: PREVHYP, dtype: int64</pre>
       <td>10552</td>
       <td>61</td>
       <td>2</td>
-      <td>28.58</td>
       <td>1</td>
       <td>0</td>
       <td>2</td>
@@ -17292,7 +18183,6 @@ Name: PREVHYP, dtype: int64</pre>
       <td>11252</td>
       <td>46</td>
       <td>2</td>
-      <td>23.1</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
@@ -17309,71 +18199,276 @@ Name: PREVHYP, dtype: int64</pre>
       <td>...</td>
       <td>...</td>
       <td>...</td>
-      <td>...</td>
     </tr>
     <tr>
-      <th>6788</th>
-      <td>9973350</td>
-      <td>57</td>
+      <th>10127</th>
+      <td>9960803</td>
+      <td>47</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
+    </tr>
+    <tr>
+      <th>10128</th>
+      <td>9961615</td>
+      <td>45</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
+    </tr>
+    <tr>
+      <th>10129</th>
+      <td>9978986</td>
+      <td>56</td>
       <td>2</td>
-      <td>22.14</td>
-      <td>1</td>
-      <td>1</td>
-      <td>4</td>
-      <td>6562</td>
-      <td>17.978082</td>
-    </tr>
-    <tr>
-      <th>6789</th>
-      <td>9982118</td>
-      <td>64</td>
-      <td>1</td>
-      <td>25.56</td>
       <td>0</td>
       <td>0</td>
-      <td>4</td>
-      <td>8457</td>
-      <td>23.169863</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
     </tr>
     <tr>
-      <th>6790</th>
-      <td>9989287</td>
-      <td>57</td>
-      <td>1</td>
-      <td>17.65</td>
+      <th>10130</th>
+      <td>9998212</td>
+      <td>40</td>
       <td>1</td>
       <td>0</td>
-      <td>4</td>
-      <td>7746</td>
-      <td>21.221918</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
     </tr>
     <tr>
-      <th>6791</th>
-      <td>9990894</td>
-      <td>54</td>
+      <th>10131</th>
+      <td>9999312</td>
+      <td>39</td>
       <td>2</td>
-      <td>21.64</td>
       <td>1</td>
       <td>0</td>
-      <td>4</td>
-      <td>6433</td>
-      <td>17.624658</td>
-    </tr>
-    <tr>
-      <th>6792</th>
-      <td>9993179</td>
-      <td>50</td>
-      <td>2</td>
-      <td>21.22</td>
-      <td>1</td>
-      <td>0</td>
-      <td>4</td>
-      <td>6729</td>
-      <td>18.435616</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
     </tr>
   </tbody>
 </table>
-<p>6793 rows × 9 columns</p>
+<p>10132 rows × 8 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Update-ages">Update ages<a class="anchor-link" href="#Update-ages">&#182;</a></h2>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[26]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;YEARS&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;STATE&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">),</span> <span class="s2">&quot;AGE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;AGE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="o">+</span> <span class="nb">round</span><span class="p">(</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;YEARS&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+<span class="n">framingham_ms</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;YEARS&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;STATE&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">3</span><span class="p">),</span> <span class="s2">&quot;AGE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;AGE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="o">+</span> <span class="nb">round</span><span class="p">(</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;YEARS&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+<span class="n">framingham_ms</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;YEARS&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;STATE&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">4</span><span class="p">),</span> <span class="s2">&quot;AGE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;AGE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="o">+</span> <span class="nb">round</span><span class="p">(</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;YEARS&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+<span class="n">framingham_ms</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;YEARS&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;STATE&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">99</span><span class="p">),</span> <span class="s2">&quot;AGE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;AGE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="o">+</span> <span class="nb">round</span><span class="p">(</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;YEARS&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[27]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[27]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RANDID</th>
+      <th>AGE</th>
+      <th>SEX</th>
+      <th>CURSMOKE</th>
+      <th>DIABETES</th>
+      <th>STATE</th>
+      <th>DAYS</th>
+      <th>YEARS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2448</td>
+      <td>39.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6238</td>
+      <td>46.0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>9428</td>
+      <td>48.0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10552</td>
+      <td>61.0</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>11252</td>
+      <td>46.0</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>10127</th>
+      <td>9960803</td>
+      <td>71.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
+    </tr>
+    <tr>
+      <th>10128</th>
+      <td>9961615</td>
+      <td>69.0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
+    </tr>
+    <tr>
+      <th>10129</th>
+      <td>9978986</td>
+      <td>80.0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
+    </tr>
+    <tr>
+      <th>10130</th>
+      <td>9998212</td>
+      <td>64.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
+    </tr>
+    <tr>
+      <th>10131</th>
+      <td>9999312</td>
+      <td>63.0</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
+    </tr>
+  </tbody>
+</table>
+<p>10132 rows × 8 columns</p>
 </div>
 </div>
 
@@ -17386,7 +18481,7 @@ Name: PREVHYP, dtype: int64</pre>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[33]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[28]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms</span> <span class="o">=</span> <span class="n">framingham_ms</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RANDID&#39;</span><span class="p">,</span> <span class="s1">&#39;YEARS&#39;</span><span class="p">])</span>
@@ -17408,7 +18503,7 @@ Name: PREVHYP, dtype: int64</pre>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[33]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
 
 
 
@@ -17434,7 +18529,6 @@ Name: PREVHYP, dtype: int64</pre>
       <th>RANDID</th>
       <th>AGE</th>
       <th>SEX</th>
-      <th>BMI</th>
       <th>CURSMOKE</th>
       <th>DIABETES</th>
       <th>STATE</th>
@@ -17446,9 +18540,8 @@ Name: PREVHYP, dtype: int64</pre>
     <tr>
       <th>0</th>
       <td>2448</td>
-      <td>39</td>
+      <td>39.0</td>
       <td>1</td>
-      <td>26.97</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -17458,9 +18551,8 @@ Name: PREVHYP, dtype: int64</pre>
     <tr>
       <th>1</th>
       <td>2448</td>
-      <td>52</td>
+      <td>57.0</td>
       <td>1</td>
-      <td>.</td>
       <td>0</td>
       <td>0</td>
       <td>3</td>
@@ -17469,23 +18561,21 @@ Name: PREVHYP, dtype: int64</pre>
     </tr>
     <tr>
       <th>2</th>
-      <td>6238</td>
-      <td>46</td>
-      <td>2</td>
-      <td>28.73</td>
-      <td>0</td>
-      <td>0</td>
+      <td>2448</td>
+      <td>63.0</td>
       <td>1</td>
       <td>0</td>
-      <td>0.000000</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>9428</td>
-      <td>48</td>
-      <td>1</td>
-      <td>25.34</td>
-      <td>1</td>
+      <td>6238</td>
+      <td>46.0</td>
+      <td>2</td>
+      <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
@@ -17493,15 +18583,14 @@ Name: PREVHYP, dtype: int64</pre>
     </tr>
     <tr>
       <th>4</th>
-      <td>10552</td>
-      <td>61</td>
-      <td>2</td>
-      <td>28.58</td>
-      <td>1</td>
-      <td>0</td>
+      <td>6238</td>
+      <td>70.0</td>
       <td>2</td>
       <td>0</td>
-      <td>0.000000</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
     </tr>
     <tr>
       <th>...</th>
@@ -17513,38 +18602,12 @@ Name: PREVHYP, dtype: int64</pre>
       <td>...</td>
       <td>...</td>
       <td>...</td>
-      <td>...</td>
     </tr>
     <tr>
-      <th>6788</th>
-      <td>9995546</td>
-      <td>52</td>
-      <td>2</td>
-      <td>21.47</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>6789</th>
-      <td>9995546</td>
-      <td>58</td>
-      <td>2</td>
-      <td>22.55</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>5209</td>
-      <td>14.271233</td>
-    </tr>
-    <tr>
-      <th>6790</th>
+      <th>10127</th>
       <td>9998212</td>
-      <td>40</td>
+      <td>40.0</td>
       <td>1</td>
-      <td>25.6</td>
       <td>0</td>
       <td>0</td>
       <td>2</td>
@@ -17552,11 +18615,21 @@ Name: PREVHYP, dtype: int64</pre>
       <td>0.000000</td>
     </tr>
     <tr>
-      <th>6791</th>
+      <th>10128</th>
+      <td>9998212</td>
+      <td>64.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
+    </tr>
+    <tr>
+      <th>10129</th>
       <td>9999312</td>
-      <td>39</td>
+      <td>39.0</td>
       <td>2</td>
-      <td>20.91</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
@@ -17564,20 +18637,30 @@ Name: PREVHYP, dtype: int64</pre>
       <td>0.000000</td>
     </tr>
     <tr>
-      <th>6792</th>
+      <th>10130</th>
       <td>9999312</td>
-      <td>46</td>
+      <td>51.0</td>
       <td>2</td>
-      <td>26.39</td>
       <td>1</td>
       <td>0</td>
       <td>2</td>
       <td>4201</td>
       <td>11.509589</td>
     </tr>
+    <tr>
+      <th>10131</th>
+      <td>9999312</td>
+      <td>63.0</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
+    </tr>
   </tbody>
 </table>
-<p>6793 rows × 9 columns</p>
+<p>10132 rows × 8 columns</p>
 </div>
 </div>
 
@@ -17590,18 +18673,19 @@ Name: PREVHYP, dtype: int64</pre>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="The-final-dataframe-has-6,793-entries.">The final dataframe has 6,793 entries.<a class="anchor-link" href="#The-final-dataframe-has-6,793-entries.">&#182;</a></h2><ul>
+<h2 id="The-final-dataframe-has-10,132-entries.">The final dataframe has 10,132 entries.<a class="anchor-link" href="#The-final-dataframe-has-10,132-entries.">&#182;</a></h2><ul>
 <li>2,917 persons experienced State 1 (No disease).</li>
-<li>2,234 persons experienced State 2 (Hypertension) - some of these persons (1,298) never experienced State 1, but began in State 2.</li>
-<li>650 persons survived State 3 (Cardiovascular disease).</li>
-<li>992 persons experienced State 4 (Death).</li>
+<li>2,476 persons experienced State 2 (Hypertension) - some of these persons (1,298) never experienced State 1, but began in State 2. </li>
+<li>844 persons survived State 3 (Cardiovascular disease).</li>
+<li>1388 persons experienced State 4 (Death).</li>
+<li>and 2,507 persons reached the end of their participation in an unknown state, without dying (were Censored)</li>
 </ul>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[34]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[29]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;STATE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
@@ -17620,16 +18704,17 @@ Name: PREVHYP, dtype: int64</pre>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[34]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[29]:</div>
 
 
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>1    2917
-2    2234
-4     992
-3     650
+<pre>1     2917
+99    2507
+2     2476
+4     1388
+3      844
 Name: STATE, dtype: int64</pre>
 </div>
 
@@ -17642,7 +18727,7 @@ Name: STATE, dtype: int64</pre>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[35]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[30]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;Datasets/framingham_ms.csv&quot;</span><span class="p">)</span>
@@ -17656,100 +18741,11 @@ Name: STATE, dtype: int64</pre>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[30]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[31]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#21 and 22</span>
 <span class="n">framingham_ms</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">20</span><span class="p">:</span><span class="mi">22</span><span class="p">]</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[30]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>RANDID</th>
-      <th>AGE</th>
-      <th>SEX</th>
-      <th>BMI</th>
-      <th>CURSMOKE</th>
-      <th>DIABETES</th>
-      <th>STATE</th>
-      <th>DAYS</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>20</th>
-      <td>23727</td>
-      <td>47</td>
-      <td>2</td>
-      <td>27.98</td>
-      <td>0</td>
-      <td>0</td>
-      <td>4</td>
-      <td>5592</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>24721</td>
-      <td>39</td>
-      <td>2</td>
-      <td>22.35</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[31]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms</span><span class="p">[</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">344720</span><span class="p">]</span>
 </pre></div>
 
      </div>
@@ -17791,46 +18787,413 @@ Name: STATE, dtype: int64</pre>
       <th>RANDID</th>
       <th>AGE</th>
       <th>SEX</th>
-      <th>BMI</th>
       <th>CURSMOKE</th>
       <th>DIABETES</th>
       <th>STATE</th>
       <th>DAYS</th>
+      <th>YEARS</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>234</th>
-      <td>344720</td>
-      <td>55</td>
+      <th>20</th>
+      <td>12806</td>
+      <td>69.0</td>
       <td>2</td>
-      <td>24.27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>14367</td>
+      <td>52.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[32]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms</span><span class="p">[</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">12629</span><span class="p">]</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[32]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RANDID</th>
+      <th>AGE</th>
+      <th>SEX</th>
+      <th>CURSMOKE</th>
+      <th>DIABETES</th>
+      <th>STATE</th>
+      <th>DAYS</th>
+      <th>YEARS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>15</th>
+      <td>12629</td>
+      <td>63.0</td>
+      <td>2</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
+      <td>0.000000</td>
     </tr>
     <tr>
-      <th>235</th>
-      <td>344720</td>
-      <td>61</td>
+      <th>16</th>
+      <td>12629</td>
+      <td>69.0</td>
       <td>2</td>
-      <td>23.48</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2212</td>
+      <td>6.060274</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>12629</td>
+      <td>87.0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>99</td>
+      <td>8766</td>
+      <td>24.016438</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[33]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms</span><span class="p">[</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">30928</span><span class="p">]</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[33]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RANDID</th>
+      <th>AGE</th>
+      <th>SEX</th>
+      <th>CURSMOKE</th>
+      <th>DIABETES</th>
+      <th>STATE</th>
+      <th>DAYS</th>
+      <th>YEARS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>35</th>
+      <td>30928</td>
+      <td>38.0</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>30928</td>
+      <td>38.0</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>146</td>
+      <td>0.4</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[34]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms</span><span class="p">[</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">69134</span><span class="p">]</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[34]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RANDID</th>
+      <th>AGE</th>
+      <th>SEX</th>
+      <th>CURSMOKE</th>
+      <th>DIABETES</th>
+      <th>STATE</th>
+      <th>DAYS</th>
+      <th>YEARS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>79</th>
+      <td>69134</td>
+      <td>59.0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>80</th>
+      <td>69134</td>
+      <td>61.0</td>
+      <td>2</td>
       <td>0</td>
       <td>0</td>
       <td>3</td>
-      <td>3488</td>
+      <td>724</td>
+      <td>1.983562</td>
     </tr>
     <tr>
-      <th>236</th>
-      <td>344720</td>
-      <td>61</td>
+      <th>81</th>
+      <td>69134</td>
+      <td>62.0</td>
       <td>2</td>
-      <td>23.48</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>1047</td>
+      <td>2.868493</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[35]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">framingham_ms</span><span class="p">[</span><span class="n">framingham_ms</span><span class="p">[</span><span class="s2">&quot;RANDID&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">63221</span><span class="p">]</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[35]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RANDID</th>
+      <th>AGE</th>
+      <th>SEX</th>
+      <th>CURSMOKE</th>
+      <th>DIABETES</th>
+      <th>STATE</th>
+      <th>DAYS</th>
+      <th>YEARS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>68</th>
+      <td>63221</td>
+      <td>61.0</td>
+      <td>2</td>
       <td>0</td>
       <td>0</td>
       <td>2</td>
-      <td>4334</td>
+      <td>0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>63221</td>
+      <td>61.0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>168</td>
+      <td>0.460274</td>
     </tr>
   </tbody>
 </table>
