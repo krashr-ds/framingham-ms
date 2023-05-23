@@ -1,0 +1,256 @@
+---
+title: A Markov Multi-State Model using the Framingham Data
+output: html_document
+---
+
+Measuring stage duration and transition probability & intensity with the msm package.
+
+The framingham_ms dataset contains 10,132 state observations, defined as:
+
+- State 1: No Disease
+- State 2: Hypertension
+- State 3: Cardiovascular disease
+- State 4: Death
+- State 99: Censored
+
+The original Framingham Data were reshaped using Python 3 in a notebook entitled FraminghamReshaping.ipynb
+
+msm Package Citation: 
+Jackson CH (2011). “Multi-State Models for Panel Data: The msm Package for R.” Journal of Statistical Software, 38(8), 1–29. doi:10.18637/jss.v038.i08.
+
+Kyle P. Rasku MS BSN RN
+
+```{r}
+library("msm")
+frmghm_ms <- read.csv("Datasets/framingham_ms.csv", header = TRUE, sep = ",") 
+frmghm_ms
+```
+
+## Define states and transitions allowed for model
+
+Provide initial values representing a guess that there is an equal probability of progression, recovery or death (qrr = - SUM where s ne r of qrs).  
+
+Or, supply the option "gen.inits=TRUE" in the msm function call.  This sets the initial values for non-zero entries of the Q matrix (transition intensity matrix) to the maximum likelihood estimates under the assumption that transitions take place only at observation times.
+
+For transparency, I show the state table and MLE estimated Q matrix, and then set that to the qmatrix arg. given to msm.
+
+```{r}
+twoway4.q <- rbind(c(0, 0.166, 0.166, 0.166), c(0, 0, 0.25, 0.25), c(0, 0, 0, 0.50), c(0,0,0,0))
+statetable.msm(STATE, RANDID, data=frmghm_ms)
+Q = crudeinits.msm(STATE ~ YEARS, RANDID, data=frmghm_ms, censor = 99, censor.states = c(1,2,3), qmatrix=twoway4.q)
+Q
+```
+
+```{r}
+# Each initial transition block must add up to -qrr (0.5) based on the assumption
+# In state 1 there are 3 possible transitions - to hypertension (2), to cvd (3), or death (4)
+# In state 2 there are 2 possible transitions - to cvd (3), or death (4)
+# In state 3 there are 2 possible transition - to hypertension (2), or death (4)
+# In state 4 there are no further transitions possible (obviously)
+
+
+rownames(Q) <- colnames(Q) <- c("Well", "Hypertensive", "CVD", "Death")
+```
+
+```{r}
+frm.msm <- msm(STATE ~ YEARS, subject = RANDID, data = frmghm_ms, qmatrix = Q, censor = 99, 
+               censor.states = c(1,2,3), exacttimes=TRUE)
+```
+
+```{r}
+frm.msm
+```
+
+## Interpreting the Transition Intensities
+
+- Mean time in the Well state: 1/0.048348 = 20.7 years
+- Mean time in the Hypertensive state: 1/0.021638 = 46.2 years
+- Mean time in the CVD state: 1/0.150787 = 6.6 years
+
+
+- From the Well state, the likelihood of transition to Hypertensive is: 0.026774 (2.7%)
+- From the Well state, the likelihood of transition to CVD is: 0.009887 (1%)
+- From the Well state, the likelihood of transition to Death is 0.011687 (1.2%)
+
+
+- From the Hypertensive state, the likelihood of transition to CVD is: 0.011434 (1.1%)
+- From the Hypertensive state, the likelihood of transition to Death is: 0.010204 (1%)
+
+
+- From the CVD state, the likelihood of transition to Death is: 0.150787 **(15%)**
+
+```{r}
+# Display the Transition Probability Matrix, P(t) over an interval of t=1 (in this case, 1 year)
+# ci = "normal" computes a confidence interval for P(t) by repeated sampling from the asymptotic 
+# normal distribution of the maximum likelihood estimates of the log(qrs)
+# Based on a default 1000 samples, converged to within 2 significant figures
+
+# NOTE:
+# ci = "boot" would instead compute intervals using nonparametric bootstrap resampling, drawn with replacement
+# the model is refitted repeatedly to estimate the sampling uncertainty surrounding the estimates 
+# more accurate, but slower
+
+pmatrix.msm(frm.msm, t = 1, ci = "normal")
+```
+
+## Transition Probabilities
+
+- The probability of being Well 1 year from now, given Well is 95%
+- The probability of being Hypertensive 1 year from now, given Well is 2.6%
+- The probability of being CVD 1 year from now, given Well is 1%
+- The probability of being Dead 1 year from now, given Well is 1.2%
+
+
+- The probability of being Hypertensive 1 year from now, given Hypertensive is 98%
+- The probability of being CVD 1 year from now, given Hypertensive is 1%
+- The probability of being Dead 1 year from now, given Hypertensive is 1%
+
+
+- The probability of being CVD 1 year from now, given CVD is 86%
+- The probability of being Dead 1 year from now, given CVD is 14%
+
+```{r}
+# A model with covariates: sex, age, diabetes (yes or no) and smoker (yes or no)
+
+frm.cov.msm <- msm(STATE ~ YEARS, subject = RANDID, data = frmghm_ms, covariates = ~ AGE + SEX + DIABETES + CURSMOKE, 
+                   qmatrix = Q, method = "BFGS", exacttimes = TRUE, censor = 99, 
+                   censor.states = c(1,2,3), control = list(fnscale=30000, maxit=10000))
+```
+
+```{r}
+# Display hazard ratios for each covariate on each transition with 95% confidence intervals
+hazard.msm(frm.cov.msm)
+```
+
+## Interpreting the (significant) Hazard Ratios
+
+
+- 1 year increase in age is associated with a 5% increased risk of CVD onset (Well -> CVD)
+- 1 year increase in age is associated with a 8% increased risk of Death (on average) (Well -> Death)
+- 1 year increase in age is associated with a 3.2% increased risk of CVD onset, if Hypertensive (HTN -> CVD)
+- 1 year increase in age is associated with a 4.4% increased risk of Death, if Hypertensive (HTN -> Death)
+- 1 year increase in age is associated with a 5.8% increased risk of Death, if CVD (CVD -> Death)
+
+
+- Being Female increases the risk of Hypertension onset (Well -> HTN) by 39% on average.
+- Being Female decreases the risk of CVD onset (Well -> CVD) by 51% on average.
+- Being Female decreases the risk of Death (Well -> Death) by 19% on average.
+- Being Female decreases the risk of CVD, given HTN (HTN -> CVD) by 45% on average.
+- Being Female decreases the risk of Death, given HTN (HTN -> Death) by 33% on average.
+
+
+- An initial diagnosis of Diabetes increases the risk of CVD onset (Well -> CVD) by an avg. of **170%**
+- An initial diagnosis of Diabetes increases the risk of CVD onset, if Hypertensive (HTN -> CVD) by an avg. of **187%**
+- An initial diagnosis of Diabetes increases the risk of Death for those who already have HTN by 103%.
+- An initial diagnosis of Diabetes increases the risk of Death for those who already have CVD by 57%.
+
+
+- Being a smoker is associated with a 27% lower risk of becoming Hypertensive if Well (these are younger people).
+- Being a smoker is associated with a 26% increased risk of CVD, if Well.
+- Being a smoker is associated with a 39% increased risk of Dying, if Well.
+- Being a smoker is associated with a 29% increased risk of CVD, if Hypertensive.
+- Being a smoker is associated with a 25% increased risk of Death, if CVD.
+
+```{r}
+# Calculating the Transition Intensity Matrix for specified covariates
+# Age: 40, Primary Diagnosis: Diabetes & Smoker
+# Note: Avg age is 50
+
+qmatrix.msm(frm.cov.msm, covariates = list(AGE = 40, DIABETES = 1, CURSMOKE = 1))
+```
+
+#### Comparing this patient to the average patient
+
+- Average patient's likelihood of transition from Well -> HTN 0.026774 (2.7%), for this patient it is **9.7%**
+- Average patient's likelihood of transition from Well -> CVD 0.009887 (1%), for this patient it is **5.3%**
+- Average patient's likelihood of transition from HTN -> CVD 0.011434 (1.1%), for this patient it is **5.9%**
+- Average patient's likelihood of transition from CVD -> Death 0.150787 (15%), for this patient it is **6.6%**
+
+
+- Average patient's mean time in Well state 20.7 yrs, this patient **13.4 yrs**
+- Average patient's mean time in Hypertensive state 46.2 yrs, this patient **12.3 yrs**
+- Average patient's mean time in CVD state 6.6 yrs, this patient **15.2 yrs**
+
+```{r}
+# Does the model with covariates fit significantly better than the one without? 
+# Compare the likelihood ratio statistic to Chi-square distribution with 24 degrees of freedom
+
+lrtest.msm(frm.msm, frm.cov.msm)
+```
+
+The p-value is highly significant.
+
+## When Q is piecewise-constant
+
+Transition probabilities can be calculated in closed form by summing the likelihood over the unknown observed state at the times when the covariates change.
+
+```{r}
+# Fitting a model where all intensities change 12 years after the beginning of the study
+# Divides data into 2 time periods: -Inf to 12 yrs, and 12 yrs to Inf
+# The study lasted a little more than 24 years, so this is about the halfway point
+
+frm.pci.msm <- msm(STATE ~ YEARS, subject = RANDID, data = frmghm_ms, qmatrix = Q, 
+                   pci = 12, method = "BFGS", exacttimes = TRUE,
+                   censor = 99, censor.states = c(1, 2, 3), 
+                   control = list(fnscale=30000, maxit=10000))
+
+# Is this data truly time-inhomogenous?
+lrtest.msm(frm.msm, frm.pci.msm)
+```
+
+It is very likely that the data is time-inhomogenous.
+
+```{r}
+hazard.msm(frm.pci.msm)
+```
+
+## Diagnostic Plots
+
+Comparing model predictions with Kaplan-Meier curves
+
+```{r}
+par(mfrow = c(2, 2))
+plot.survfit.msm(frm.msm, main = "frm.msm: no covariates", mark.time = FALSE, legend.pos=c(0,0))
+plot.survfit.msm(frm.cov.msm, main = "frm.cov.msm: covariates", mark.time = FALSE, legend.pos=c(0,0))
+plot.survfit.msm(frm.pci.msm, mark.time = FALSE, legend.pos=c(0,0))
+title("frm.pci.msm: time-inhomogeneous", line = 2)
+title("(12 year change point)", line = 1)
+frm.pci2.msm <- msm(STATE ~ YEARS, subject = RANDID, data = frmghm_ms, qmatrix = Q, 
+                    pci = c(6,12,18), method = "BFGS", exacttimes = TRUE,
+                    censor = 99, censor.states=c(1, 2, 3), 
+                    control = list(fnscale=30000, maxit=10000))
+plot.survfit.msm(frm.pci2.msm, mark.time = FALSE, legend.pos=c(0,0))
+title("frm.pci2.msm: time-inhomogeneous", line = 2)
+title("(6, 12 and 18 year change points)", line = 1)
+```
+
+The fit is much improved after adding censoring!  
+
+Adding additional time-change points doesn't appear to help the fit, but covariates likely do, although the differences between the first two graphs are not readily apparent, the differences in the model fits are.
+
+## Comparing Observed and Expected Prevalence
+
+Works best when individuals are actually observed at the computed times, otherwise assumptions are made such as individuals are only observed at these times, or midpoints are assumed.
+
+The observed prevalence of a state is simply calculated as the number of individuals known to be in that state, divided by the number of individuals whose state is known at that time, which ignores the information from individuals censored at earlier times (root of Kaplan-Meier estimation :))
+
+```{r}
+# Need to look at how this is implemented by Gentleman et al. 1994 using prevalence.msm, and plot.prevalence.msm
+```
+
+## None of these models give an adequate fit
+
+A more complex pattern of time-dependence or allowing transition intensities to depend on covariates would likely yield a better fit.
+
+TO DO => Figure out how to allow transition intensities to depend on covariates!
+
+## It is also possible to calculate the influence of each individual on the MLE
+
+Using scoreresid.msm
+
+## Extensions of msm and limitations
+
+For continuously-observed processes: mstate (deWreede et al. 2010)
+
+For Random Effects models (unexplained heterogeneity in transition intensities between individuals) - calculating likelihood often intractable with a few exceptions: tracking model - random effect acts on all intensities simultaneously (Satten 1999), or a discrete random effects distribution (Cook et al 2004)
+
